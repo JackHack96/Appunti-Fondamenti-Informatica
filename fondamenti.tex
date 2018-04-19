@@ -1,0 +1,298 @@
+\documentclass[a4paper]{scrbook}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usepackage{pgfplots}
+
+\newcommand{\greenmark}{\quad \textcolor{green}{\checkmark}}
+
+%opening
+\title{Manuale di sopravvivenza per l'esame Fondamenti di Informatica}
+\subtitle{Una guida pratica per chi deve affrontare questo esame apparentemente insormontabile}
+\author{Matteo Iervasi \and Jenny Bonato}
+\date{Aprile 2018}
+
+\begin{document}
+	
+\maketitle
+\tableofcontents
+
+\chapter*{Prefazione}
+\addcontentsline{toc}{chapter}{Prefazione}
+Questo documento ha lo scopo di dare un'idea al povero studente che deve affrontare il temibile esame di \textit{Fondamenti di Informatica} di come si affrontano gli esercizi.\\
+\textbf{{\large NON}} tratterò l'aspetto teorico, per tanto assumo che si abbia già studiato (o almeno tentato di studiare) quella parte.
+Mi rendo conto che la materia in questione sia piuttosto ostica, ma vi posso assicurare che una volta compresi i concetti base il resto verrà da se.
+Ovviamente è \textbf{fondamentale} fare molti esercizi, in modo da verificare e consolidare l'apprendimento. Cercherò di essere il più chiaro possibile, ma non essendo mai stato bravo
+a spiegare potrebbero esserci dei punti non chiari, per i quali chiedo scusa in anticipo.
+
+Voglio ringraziare Jenny Bonato per l'immensa pazienza che ha avuto per insegnare a questo somaro le basi di questa materia.
+
+Qualora dovreste trovare degli errori, scrivetemi a \href{mailto:matteoiervasi@gmail.com}{matteoiervasi@gmail.com}, oppure fate direttamente una ‘‘\textit{pull request}’’ nel repository GitHub.
+
+\chapter{Linguaggi regolari}
+Anche se molto spesso il primo esercizio non tratta un linguaggio regolare, è sempre utile sapere come si deve procedere.
+
+Come dice il prof. Giacobazzi, la prima cosa da fare quando si osserva un linguaggio è capire \textit{intuitivamente} a che classe appartiene (regolare, CF, ecc.).
+L'intuizione può essere allenata con la pratica, tuttavia esiste un trucco molto utile: se nel linguaggio è necessario ‘‘contare’’ in qualche modo qualcosa, allora \textbf{sicuramente}
+questo linguaggio non sarà regolare. Dopo aver intuitivamente classificato il linguaggio bisogna procedere con la dimostrazione. Nel caso in cui il linguaggio sia \textbf{regolare}, bisogna costruire l'automa e dimostrarne la correttezza.
+
+Ricordiamo che un'automa è scrivibile come una quintupla $<Q,\Sigma,\delta,q_0,F>$, dove:
+\begin{itemize}
+	\item $Q$ è l'insieme degli stati
+	\item $\Sigma$ è l'alfabeto di input
+	\item $\delta:Q\times\Sigma\rightarrow Q$ è la funzione di transizione di uno stato
+	\item $q_0$ è lo stato iniziale
+	\item $F\subseteq Q$ è l'insieme degli stati finali
+\end{itemize}
+
+Prendiamo in esame il seguente linguaggio:
+$$ L=\{\{0,1\}^* \text{ t.c. ci sono almeno due 0 consecutivi e non ci sono mai due 1 consecutivi}\} $$
+
+Disegniamo l'automa corrispondente (non mi soffermo sul come farlo, questo è argomento del corso di Architettura degli Elaboratori):
+\begin{center}
+	\begin{tikzpicture}[scale=0.2]
+	\tikzstyle{every node}+=[inner sep=0pt]
+	\draw [black] (10.3,-30.4) circle (3);
+	\draw (10.3,-30.4) node {$q_0$};
+	\draw [black] (23.6,-21.3) circle (3);
+	\draw (23.6,-21.3) node {$q_1$};
+	\draw [black] (23.6,-41) circle (3);
+	\draw (23.6,-41) node {$q_4$};
+	\draw [black] (44.1,-21.3) circle (3);
+	\draw (44.1,-21.3) node {$q_2$};
+	\draw [black] (44.1,-21.3) circle (2.4);
+	\draw [black] (44.1,-41.9) circle (3);
+	\draw (44.1,-41.9) node {$q_3$};
+	\draw [black] (44.1,-41.9) circle (2.4);
+	\draw [black] (34.5,-51.6) circle (3);
+	\draw (34.5,-51.6) node {$q_\bot$};
+	\draw [black] (12.78,-28.71) -- (21.12,-22.99);
+	\fill [black] (21.12,-22.99) -- (20.18,-23.03) -- (20.75,-23.86);
+	\draw (18.1,-26.35) node [below] {$0$};
+	\draw [black] (12.65,-32.27) -- (21.25,-39.13);
+	\fill [black] (21.25,-39.13) -- (20.94,-38.24) -- (20.32,-39.02);
+	\draw (15.79,-36.19) node [below] {$1$};
+	\draw [black] (22.648,-38.157) arc (-164.71686:-195.28314:26.582);
+	\fill [black] (22.65,-38.16) -- (22.92,-37.25) -- (21.95,-37.52);
+	\draw (21.21,-31.15) node [left] {$1$};
+	\draw [black] (24.462,-24.172) arc (13.77659:-13.77659:29.302);
+	\fill [black] (24.46,-24.17) -- (24.17,-25.07) -- (25.14,-24.83);
+	\draw (25.81,-31.15) node [right] {$0$};
+	\draw [black] (25.75,-43.09) -- (32.35,-49.51);
+	\fill [black] (32.35,-49.51) -- (32.12,-48.59) -- (31.43,-49.31);
+	\draw (27.88,-46.78) node [below] {$1$};
+	\draw [black] (26.6,-21.3) -- (41.1,-21.3);
+	\fill [black] (41.1,-21.3) -- (40.3,-20.8) -- (40.3,-21.8);
+	\draw (33.85,-21.8) node [below] {$0$};
+	\draw [black] (44.91,-18.423) arc (192.01279:-95.98721:2.25);
+	\draw (49.78,-15.79) node [above] {$0$};
+	\fill [black] (46.88,-20.19) -- (47.76,-20.52) -- (47.55,-19.54);
+	\draw [black] (45.211,-24.085) arc (18.18012:-18.18012:24.087);
+	\fill [black] (45.21,-39.12) -- (45.94,-38.51) -- (44.99,-38.2);
+	\draw (46.91,-31.6) node [right] {$1$};
+	\draw [black] (41.99,-44.03) -- (36.61,-49.47);
+	\fill [black] (36.61,-49.47) -- (37.53,-49.25) -- (36.82,-48.55);
+	\draw (38.78,-45.27) node [left] {$1$};
+	\draw [black] (43.177,-39.047) arc (-165.0509:-194.9491:28.868);
+	\fill [black] (43.18,-24.15) -- (42.49,-24.8) -- (43.45,-25.05);
+	\draw (41.7,-31.6) node [left] {$0$};
+	\end{tikzpicture}
+\end{center}
+Ora è necessario dimostrare la correttezza dell'automa.
+Dobbiamo dimostrare che $x\in L \Leftrightarrow x\in L(n)$, tuttavia non dimostriamo in maniera diretta la doppia implicazione, ma dimostriamo separatamente le seguenti:
+\begin{enumerate}
+	\item $x\in L \Rightarrow x \in L(m)$
+	\item $x\notin L \Rightarrow x \notin L(m)$
+\end{enumerate}
+\begin{enumerate}
+	\item $x\in L \Rightarrow x \in L(m)$\\
+	Innanzitutto ci troviamo un \textbf{caso base} utile per il \textbf{passo induttivo}. Qual'è la stringa più piccola $\in L$? È ‘‘$00$’’\\
+	\textbf{Passo base}\\
+	$ \delta(q_0,00)=q_2 \in F \greenmark $\\
+	\textbf{Passo induttivo}\\
+	Supponiamo che $\forall x \text{ t.c. } |x|=n \quad x \in L \Rightarrow x\in L(n)$.\\
+	Prendiamo allora una stringa $y$ t.c. $|y|>n$ e $y=xa \text{ con }a\in\varepsilon$.\\
+	Visto che la funzione di transizione gode della proprietà della composizione, posso considerare $\delta(\delta(q_0,x),a)$.
+	Nel nostro caso però abbiamo due stati finali, $q_2$ e $q_3$, quindi dobbiamo guardare entrambi.
+	\begin{itemize}
+		\item $\delta(q_0,x)=q_2$\\
+		Se $a=0$ allora $\delta(q_2,0)=q_2 \in F \greenmark$\\
+		Se $a=1$ allora $\delta(q_2,1)=q_3 \in F \greenmark$
+		\item $\delta(q_0,x)=q_3$\\
+		Se $a=0$ allora $\delta(q_3,0)=q_2 \in F \greenmark$\\
+		Se $a=1$ allora $\delta(q_3,1)=q_\bot \notin F \greenmark$ (è giusto visto che in questo caso $y\notin L$, dato che ci sarebbero due 1 consecutivi)
+	\end{itemize}
+	
+	\item $x\notin L \Rightarrow x \notin L(m)$\\
+	In questa caso dobbiamo trovare i casi che \textbf{NON} finiscono in stati finali.\\
+	\textbf{Passo base}\\
+	$x=0 \rightarrow \delta(q_0,0)=q_1 \notin F \text{ (non ho almeno due 0 consecutivi)} \greenmark$\\
+	$x=11 \rightarrow \delta(q_0,11)=q_\bot \notin F \text{ (ho due 1 consecutivi)} \greenmark$\\
+	$x=\varepsilon \rightarrow \delta(q_0,\varepsilon)=q_0 \notin F \greenmark$\\
+	$x=1 \rightarrow \delta(q_0,1)=q_4 \notin F \greenmark$\\
+	\textbf{Passo induttivo}\\
+	Supponiamo che $\forall x \text{ t.c. } |x|=n \quad x \notin L \Rightarrow x\notin L(n)$.\\
+	Prendiamo allora una stringa $y$ t.c. $|y|>n$ e $y=xa \text{ con }a\in\varepsilon$. Ricordiamoci che possiamo usare $\delta(\delta(q_0,x),a)$.\\
+	In modo analogo alla precedente dimostrazione, dobbiamo considerare gli stati non finali.
+	\begin{itemize}
+		\item $\delta(q_0,x)=q_0$\\
+		Se $a=0$ allora $\delta(q_0,0)=q_1 \notin F \greenmark$\\
+		Se $a=1$ allora $\delta(q_0,1)=q_4 \notin F \greenmark$
+		\item $\delta(q_0,x)=q_1$\\
+		Se $a=0$ allora $\delta(q_1,0)=q_2 \in F \greenmark$ (è giusto visto che in questo caso $y\in L$, dato che ci sono \textbf{almeno} due 0 consecutivi)\\
+		Se $a=1$ allora $\delta(q_1,1)=q_4 \notin F \greenmark$
+		\item $\delta(q_0,x)=q_4$\\
+		Se $a=0$ allora $\delta(q_4,0)=q_1 \notin F \greenmark$\\
+		Se $a=1$ allora $\delta(q_4,1)=q_\bot \notin F \greenmark$
+		\item $\delta(q_0,x)=q_\bot$\\
+		Se $a=0$ allora $\delta(q_\bot,0)=q_\bot \notin F \greenmark$\\
+		Se $a=1$ allora $\delta(q_\bot,1)=q_\bot \notin F \greenmark$
+	\end{itemize}
+\end{enumerate}
+Abbiamo quindi dimostrato la doppia implicazione e con essa la \textit{correttezza} del nostro automa.
+
+Facciamo un altro esempio, prendiamo come linguaggio
+$$ L=\{\{0,1\}^* \text{ t.c. gli 0 sono sempre a coppie}\} $$
+Ecco l'automa:
+\begin{center}
+	\begin{tikzpicture}[scale=0.2]
+	\tikzstyle{every node}+=[inner sep=0pt]
+	\draw [black] (20.9,-26.9) circle (3);
+	\draw (20.9,-26.9) node {$q_0$};
+	\draw [black] (20.9,-26.9) circle (2.4);
+	\draw [black] (36.2,-26.9) circle (3);
+	\draw (36.2,-26.9) node {$q_1$};
+	\draw [black] (50.6,-26.9) circle (3);
+	\draw (50.6,-26.9) node {$qb$};
+	\draw [black] (23.732,-25.918) arc (104.62203:75.37797:19.088);
+	\fill [black] (33.37,-25.92) -- (32.72,-25.23) -- (32.47,-26.2);
+	\draw (28.55,-24.8) node [above] {$0$};
+	\draw [black] (33.33,-27.765) arc (-77.20264:-102.79736:21.58);
+	\fill [black] (23.77,-27.77) -- (24.44,-28.43) -- (24.66,-27.46);
+	\draw (28.55,-28.8) node [below] {$0$};
+	\draw [black] (39.2,-26.9) -- (47.6,-26.9);
+	\fill [black] (47.6,-26.9) -- (46.8,-26.4) -- (46.8,-27.4);
+	\draw (43.4,-27.4) node [below] {$1$};
+	\draw [black] (53.28,-25.577) arc (144:-144:2.25);
+	\draw (57.85,-26.9) node [right] {$0,1$};
+	\fill [black] (53.28,-28.22) -- (53.63,-29.1) -- (54.22,-28.29);
+	\draw [black] (18.22,-28.223) arc (-36:-324:2.25);
+	\draw (13.65,-26.9) node [left] {$1$};
+	\fill [black] (18.22,-25.58) -- (17.87,-24.7) -- (17.28,-25.51);
+	\end{tikzpicture}
+\end{center}
+Dobbiamo dimostrare che $x\in L \Leftrightarrow x\in L(n)$:
+\begin{enumerate}
+	\item $x\in L \Rightarrow x \in L(m)$
+	\item $x\notin L \Rightarrow x \notin L(m)$
+\end{enumerate}
+\begin{enumerate}
+	\item $x\in L \Rightarrow x \in L(m)$\\
+	\textbf{Passo base}\\
+	$ x=00 \rightarrow \delta(q_0,00)=q_0 \in F \greenmark $\\
+	\textbf{Passo induttivo}\\
+	Supponiamo che $\forall x \text{ t.c. } |x|=n \quad x \in L \Rightarrow x\in L(n)$.\\
+	Prendiamo allora una stringa $y$ t.c. $|y|>n$ e $y=xa \text{ con }a\in\varepsilon$.\\
+	Visto che la funzione di transizione gode della proprietà della composizione, posso considerare $\delta(\delta(q_0,x),a)$.\\
+	$\delta(q_0,x)=q_0$\\
+	Se $a=0$ allora $\delta(q_0,0)=q_1 \notin F \greenmark$\\
+	Se $a=1$ allora $\delta(q_0,1)=q_0 \in F \greenmark$
+	
+	\item $x\notin L \Rightarrow x \notin L(m)$\\
+	\textbf{Passo base}\\
+	$x=0 \rightarrow \delta(q_0,0)=q_1 \notin F \greenmark$\\
+	$x=1 \rightarrow \delta(q_0,1)=q_1 \notin F \greenmark$\\
+	\textbf{Passo induttivo}\\
+	Supponiamo che $\forall x \text{ t.c. } |x|=n \quad x \notin L \Rightarrow x\notin L(n)$.\\
+	Prendiamo allora una stringa $y$ t.c. $|y|>n$ e $y=xa \text{ con }a\in\varepsilon$. Ricordiamoci che possiamo usare $\delta(\delta(q_0,x),a)$.\\
+	In modo analogo alla precedente dimostrazione, dobbiamo considerare gli stati non finali.
+	\begin{itemize}
+		\item $\delta(q_0,x)=q_1$\\
+		Se $a=0$ allora $\delta(q_1,0)=q_0 \in F \greenmark$\\
+		Se $a=1$ allora $\delta(q_1,1)=q_\bot \notin F \greenmark$
+		\item $\delta(q_0,x)=q_\bot$\\
+		Se $a=0$ allora $\delta(q_\bot,0)=q_\bot \notin F \greenmark$\\
+		Se $a=1$ allora $\delta(q_\bot,1)=q_\bot \notin F \greenmark$
+	\end{itemize}
+\end{enumerate}
+Abbiamo quindi dimostrato la doppia implicazione e con essa la \textit{correttezza} del nostro automa.
+
+\chapter{Linguaggi liberi dal contesto e grammatiche}
+Questa categoria è più rognosa di quella dei regolari, ma fortunatamente se dovesse capitarci non dobbiamo costruire un'automa. Dobbiamo però costruire la grammatica,
+una procedura non sempre immediata purtroppo. Un utile trucco per riconoscere un linguaggio CF è immaginare un'automa con una pila: ad esempio se dobbiamo riconoscere il linguaggio
+$0^n1^n$ il nostro automa mano a mano che legge gli $0$ li mette in una pila, dopodiché leggendo gli $1$ la scarica, e se a fine stringa la pila è vuota allora il linguaggio è riconosciuto.\\
+\textit{Nota}: l'automa non è costretto a leggere linearmente la stringa, nell'esempio di prima possiamo anche leggere gli 1 a partire dal fondo, facendo valere la stessa regola dello
+svuotamento della pila.
+
+Prendiamo in esame il seguente linguaggio 
+$$L=\{x\in\{0,1\}^*\text{ t.c. ci siano tanti 0 quanti 1}\}$$
+Intuitivamente notiamo che è necessario ‘‘contare’’ il numero di $0$ e far si che sia uguale al numero di $1$. Esempi di possibili combinazioni:
+\begin{itemize}
+	\item $01$
+	\item $00001111$
+	\item $01010101$
+	\item $011010$
+\end{itemize}
+Notiamo che non è necessario che ci sia una determinata sequenza, basta solo che gli $0$ totali siano uguali agli $1$.
+Pensandoci un po', viene naturale classificare questo linguaggio nella classe dei \textit{context free}.
+Per dimostrarlo occorre prima applicare il cosiddetto \textbf{pumping lemma}, in modo da mostrare che non può essere regolare.
+Successivamente dobbiamo scrivere una \textbf{grammatica} che genera il linguaggio e \textbf{dimostrarne la correttezza}.\\
+\textbf{Fase 1: Pumping Lemma}\\
+In questa fase ci basta prendere una stringa appartenente al linguaggio e dimostrare che ‘‘pompandone’’ una parte noi usciamo dal linguaggio.
+Ricordiamoci che nell'applicare il pumping lemma dobbiamo sottostare a dei vincoli:
+\begin{itemize}
+	\item $z=uvw$
+	\item $|uv|\leq n$
+	\item $|v|>0$
+	\item $\forall i \in \mathbb{N}.uv^iw\in L \text{ con }i\geq0$
+\end{itemize}
+Ovviamente non siamo stupidi, quindi scegliamo una stringa facile, in questo caso $z=0^n1^n$.
+L'unica suddivisione possibile è:\\
+\begin{center}
+	\begin{tikzpicture}
+	% String rectangle
+	\draw (0,0.75) -- (0,1.25) node(0){};
+	\draw (0,0.75) -- (5,0.75) node[midway,above]{0};
+	\draw (5,0.75) -- (5,1.25) node(5){};
+	\draw (5,0.75) -- (10,0.75) node[midway,above]{1};
+	\draw (10,0.75) -- (10,1.25) node(10){};
+	
+	% Bracket rectangle
+	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] (0.north east) -- (5.north west) node [midway, above=0.2cm] {n};
+	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] (5.north east) -- (10.north west) node [midway, above=0.2cm] {n};
+	
+	% String division rectangle
+	\draw (0,0) -- (0,0.5);
+	\draw (0,0) -- (2.5,0) node[midway,above]{$u$};
+	\draw (2.5,0) -- (2.5,0.5);
+	\draw (2.5,0) -- (5,0) node[midway,above]{$v$};
+	\draw (5,0) -- (5,0.5);
+	\draw (5,0) -- (10,0) node[midway,above]{$w$};
+	\draw (10,0) -- (10,0.5);
+	\end{tikzpicture}
+\end{center}
+La stringa apparterrà al linguaggio solamente se $0^a1^b\in L \Leftrightarrow a=b$.\\
+La nostra stringa $z$ sarà quindi composta da $0^{k-|v|}0^{\textbf{i}|v|}1^k$. Per soddisfare la condizione appena scritta sopra $k-|v|+|v|i=k$, quindi:\\
+$-|v|+|v|i=0$\\
+$|v|(i-1)=0$\\
+Ma questo è un assurdo! Infatti $|v|$ non può essere uguale a $0$ per i vincoli del pumping lemma.
+Vediamo che per $i=0 \wedge i\geq2$ usciamo dal linguaggio, quindi possiamo dire che è sicuramente non regolare.\\
+\textbf{Fase 2: Grammatica}\\
+\textbf{Fase 3: Dimostrazione della grammatica}\\
+
+\chapter{Teoria della ricorsione}
+TODO
+\end{document}
