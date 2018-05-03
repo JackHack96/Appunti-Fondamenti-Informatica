@@ -1,4 +1,4 @@
-\documentclass[a4paper]{scrbook}
+\documentclass[a4paper,oneside]{scrbook}
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
@@ -292,6 +292,54 @@ Ma questo è un assurdo! Infatti $|v|$ non può essere uguale a $0$ per i vincol
 Vediamo che per $i=0 \wedge i\geq2$ usciamo dal linguaggio, quindi possiamo dire che è sicuramente non regolare.\\
 \textbf{Fase 2: Grammatica}\\
 \textbf{Fase 3: Dimostrazione della grammatica}\\
+
+Facciamo un altro esempio, prendiamo come linguaggio
+$$L={a^nb^n}$$
+Sappiamo che è CF perché è necessario ‘‘tener conto’’ di quante $a$ sono state riconosciute per verificare che siano pari al numero di $b$.\\
+\textbf{Fase 1: Pumping Lemma}\\
+\textbf{Fase 2: Grammatica}\\
+Una possibile grammatica per questo linguaggio è:
+$$S \rightarrow aSb|ab$$
+Mentre una possibile derivazione per questa grammatica è:
+\begin{center}
+	\begin{tikzpicture}
+	\node{S}
+		child{node{aSb}
+			child{node{aaSbb}}
+			child{node{aabb}}
+		}
+		child{node{ab}};
+	\end{tikzpicture}
+\end{center}
+\textbf{Fase 3: Dimostrazione della grammatica}\\
+Per dimostrare la correttezza della nostra grammatica, dobbiamo dimostrare la seguente condizione:
+$$x\in L \Leftrightarrow S \Rightarrow_* x$$
+Essendo una doppia implicazione, dimostreremo separatamente
+\begin{enumerate}
+	\item $x\in L \Rightarrow S \Rightarrow_* x $, che si dimostra per \textit{induzione} sulla lunghezza della stringa
+	\item $ S \Rightarrow_i k \Rightarrow x \in L$, che si dimostra per \textit{induzione} sul numero di passi di derivazione
+\end{enumerate}
+\begin{enumerate}
+	\item $x\in L \Rightarrow S \Rightarrow_* x $\\
+	\textbf{Passo base}\\
+	$y=ab \qquad y \in L$ ed $\exists S\Rightarrow ab $ (esiste una derivazione S che porta ad $ab$).\\
+	\textbf{Passo induttivo}\\
+	Consideriamo $y \in \varepsilon^*$ tale che $|y|<n$ e supponiamo che $\forall y \in L \Rightarrow S \Rightarrow_* y$.\\
+	Allora prendiamo $|x|\geq n$ e sapendo che $y$ è composto come $y=a^kb^k$, $x$ sarà $x=a^mb^m$ con $m>k$. Procediamo prendendo $m=k+1$:
+	$$ x=a^{k+1}b^{k+1}$$
+	Sappiamo per ipotesi che esiste una derivazione  $S\Rightarrow_n a^kb^k$, quindi
+	$$\exists S \Rightarrow y \rightarrow \exists S \Rightarrow a^kb^k$$
+	ma se esiste questa esiste anche la derivazione precedente, ovvero
+	$$\exists S \Rightarrow_{i-1} a^{k-1}Sb^{k-1} ...$$
+	essendo che la produzione $S\rightarrow aSb$ appartiene all'insieme delle possibili produzioni, posso sostituire:
+	$$... \Rightarrow_i a^{k-1}aSbb^{k-1} \Rightarrow_{i+1} a^kaba^k = a^{k+1}b^{k+1} = x \greenmark$$
+	In pratica siamo tornati indietro di un passo e abbiamo applicato una sostituzione che ci conducesse alla stringa $x$.
+	\item $ S \Rightarrow_i k \Rightarrow x \in L$\\
+	\textbf{Passo base}\\
+	$S\rightarrow ab \qquad x=ab x \in L$\\
+	\textbf{Passo induttivo}\\
+	$\forall i \leq n \quad S \Rightarrow_i y \Rightarrow y \in L $
+\end{enumerate}
 
 \chapter{Teoria della ricorsione}
 TODO
