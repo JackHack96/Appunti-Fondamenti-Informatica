@@ -471,7 +471,7 @@ Posto che $\forall z$ tale che $|z|>n$, dobbiamo soddisfare i seguenti vincoli:
     \item $|vx|>0$
     \item $uv^iwx^iy\in L$
 \end{itemize}
-Elenchiamo le diverse possibili suddivisioni:
+elenchiamo le diverse possibili suddivisioni:
 \begin{center}
     \begin{tikzpicture}
     % Defining main coordinates
@@ -491,25 +491,67 @@ Elenchiamo le diverse possibili suddivisioni:
     
     % Original string rectangle
     % |_a_
-    \draw ($(a0)+(0,0.5*8)$) -- ($(a1)+(0,0.5*8)$);
-    \draw ($(a0)+(0,0.5*8)$) -- ($(b0)+(0,0.5*8)$) node[midway,above]{a};
+    \def\y{0.5*8}
+    \draw ($(a1)$) -- ($(a1)+(0,\y)$) [dashed];
+    \draw ($(a0)+(0,\y)$) -- ($(b0)+(0,\y)$) [dashed] node[midway,above]{a};
     % |_b_
-    \draw ($(b0)+(0,0.5*8)$) -- ($(b1)+(0,0.5*8)$);
-    \draw ($(b0)+(0,0.5*8)$) -- ($(c0)+(0,0.5*8)$) node[midway,above]{b};
+    \draw ($(b1)$) -- ($(b1)+(0,\y)$) [dashed];
+    \draw ($(b0)+(0,\y)$) -- ($(c0)+(0,\y)$) [dashed] node[midway,above]{b};
     % |_c
-    \draw ($(c0)+(0,0.5*8)$) -- ($(c1)+(0,0.5*8)$);
-    \draw ($(c0)+(0,0.5*8)$) -- ($(d0)+(0,0.5*8)$) node[midway,above]{c};
+    \draw ($(c1)$) -- ($(c1)+(0,\y)$) [dashed];
+    \draw ($(c0)+(0,\y)$) -- ($(d0)+(0,\y)$) [dashed] node[midway,above]{c};
     % |
-    \draw ($(d0)+(0,0.5*8)$) -- ($(d1)+(0,0.5*8)$);
+    \draw ($(d1)$) -- ($(d1)+(0,\y)$) [dashed];
     
-    % Possible divisions rectangles
-    \draw ($(a0)+(0,0.5*7-0.25)$) -- ($(a1)+(0,0.5*7-0.25)$);
-    \draw ($(a0)+(0,0.5*7-0.25)$) -- ($(b0)+(-1.5,0.5*7-0.25)$) node[midway,above]{$u$};
-    \draw ($(b0)+(-1.5,0.5*7-0.25)$) -- ($(b1)+(-1.5,0.5*7-0.25)$);
-    \draw ($(b0)+(-1.5,0.5*7-0.25)$) -- ($(b0)+(1.5,0.5*7-0.25)$) node[midway,above]{$v$};
-%    \draw ($(b0)+(1.5,0.5*7-0.25)$)
+    % Possible divisions
+    \def\y{0.5*7}
+    \draw ($(b0)+(0,\y)$) -- ($(b0)+(0,\y)$) node[midway,above]{$v$};
+    \draw ($(b0)+(2.5,\y)$) -- ($(b0)+(2.5,\y)$) node[midway,above]{$x$};
+    
+    \def\y{0.5*6}
+    \draw ($(c0)+(-2.5,\y)$) -- ($(c0)+(-2.5,\y)$) node[midway,above]{$v$};
+    \draw ($(c0)+(0,\y)$) -- ($(c0)+(0,\y)$) node[midway,above]{$x$};
+    
+    \def\y{0.5*5}
+    \draw ($(a0)+(2.5,\y)$) -- ($(a0)+(2.5,\y)$) node[midway,above]{$vx$};
+    
+    \def\y{0.5*4}
+    \draw ($(b0)+(2.5,\y)$) -- ($(b0)+(2.5,\y)$) node[midway,above]{$vx$};
+    
+    \def\y{0.5*3}
+    \draw ($(c0)+(2.5,\y)$) -- ($(c0)+(2.5,\y)$) node[midway,above]{$vx$};
+    
+    \def\y{0.5*2}
+    \draw ($(b0)+(-0.2,\y)$) -- ($(b0)+(-0.2,\y)$) node[midway,above]{$v$};
+    \draw ($(b0)+(0.2,\y)$) -- ($(b0)+(0.2,\y)$) node[midway,above]{$x$};
+        
+    \def\y{0.5}
+    \draw ($(c0)+(-0.2,\y)$) -- ($(c0)+(-0.2,\y)$) node[midway,above]{$v$};
+    \draw ($(c0)+(0.2,\y)$) -- ($(c0)+(0.2,\y)$) node[midway,above]{$x$};
     \end{tikzpicture}
 \end{center}
+Notiamo che ci sono due casi in cui si ha un'accavallamento, ovvero un caso nel quale o $v$ o $x$
+stanno in mezzo alle suddivisioni (ad esempio $v$ è composta da un po' di $a$ e di $b$).
+È facile dimostrare come in questi casi il linguaggio ‘‘pompato’’ esca dal linguaggio originale.
+Facciamo vedere comunque il procedimento, prendendo come esempio il primo caso (d'ora in poi $k=n$). La stringa sarà composta come:
+\begin{equation*}
+	a^{k-\frac{|v|}{2}}(ab)^{|v|\textbf{i}}b^{k-\frac{|v|}{2}-|x|+\textbf{i}|x|}c^k
+\end{equation*}
+\textbf{N.B.}: $\frac{|v|}{2}$ è solo indicativo, non è proprio che dobbiamo prendere quel pezzo.
+Ora abbiamo due casi:
+\begin{itemize}
+	\item $|v|=0$\\
+	$a^kb^{k-|x|+\textbf{i}|x|}c^k$\\
+	$k+|x|(\textbf{i}-1)=k$\\
+	$|x|=0 \quad \Rightarrow$ impossibile, in quanto si violerebbe il vincolo $|vx|>0$.
+	
+	\item $|v|>0$\\
+	$a^{k-\frac{|v|}{2}}(ab)^{|v|\textbf{i}}b^{k-\frac{|v|}{2}+|x|(\textbf{i}-1)}c^k$\\
+	con $i=2 \Rightarrow a^{k-\frac{|v|}{2}}(ab)^{2|v|}b^{k-\frac{|v|}{2}+|x|}c^k$\\
+	$k-\frac{|v|}{2}+2|v|+k-\frac{|v|}{2}+|x|=2k$ (la somma della lunghezza di $a$ e $b$ è $2k$ )\\
+	$|v|+|x|=0 \quad \Rightarrow$ impossibile, in quanto si violerebbe il vincolo $|vx|>0$.
+\end{itemize}
+
 
 \chapter{Esercizi vari}
 Classificare le seguenti famiglie di linguaggi al variare di $n,m \in \mathbb{N}$ (N.B. $0\in\mathbb{N}$), motivando formalmente la risposta:
@@ -518,7 +560,7 @@ Classificare le seguenti famiglie di linguaggi al variare di $n,m \in \mathbb{N}
 	&B_m = \bigcup_{n\in\mathbb{N}} A_{m,n}\\
 	&C_n = \bigcup_{m\in\mathbb{N}} A_{m,n}
 \end{align*}
-Innanzitutto notiamo che il linguaggio, al variare di $m,n$, rimane un linguaggio regolare, ad esempio:
+Notiamo che il linguaggio, al variare di $m,n$, è finito, ad esempio:
 \begin{align*}
 	&A_{0,0}=\varnothing\\
 	&A_{1,1}=11001\\
@@ -528,77 +570,7 @@ Innanzitutto notiamo che il linguaggio, al variare di $m,n$, rimane un linguaggi
 	&A_{2,2}=1111001111110011\\
 	&\dots
 \end{align*}
-Quindi prendiamo un esempio facile e dimostriamo la correttezza del suo automa. Scegliamo $L=A_{2,1}$.
-\begin{center}
-	\begin{tikzpicture}[scale=0.2]
-	\tikzstyle{every node}+=[inner sep=0pt]
-	\draw [black] (6.3,-19.7) circle (3);
-	\draw (6.3,-19.7) node {$q_0$};
-	\draw [black] (16.9,-19.7) circle (3);
-	\draw (16.9,-19.7) node {$q_1$};
-	\draw [black] (29.2,-19.7) circle (3);
-	\draw (29.2,-19.7) node {$q_2$};
-	\draw [black] (40.5,-19.7) circle (3);
-	\draw (40.5,-19.7) node {$q_3$};
-	\draw [black] (51.8,-19.7) circle (3);
-	\draw (51.8,-19.7) node {$q_4$};
-	\draw [black] (63.5,-19.7) circle (3);
-	\draw (63.5,-19.7) node {$q_5$};
-	\draw [black] (74.9,-19.7) circle (3);
-	\draw (74.9,-19.7) node {$q_6$};
-	\draw [black] (74.9,-19.7) circle (2.4);
-	\draw [black] (40.5,-38.1) circle (3);
-	\draw (40.5,-38.1) node {$\bot$};
-	\draw [black] (19.9,-19.7) -- (26.2,-19.7);
-	\fill [black] (26.2,-19.7) -- (25.4,-19.2) -- (25.4,-20.2);
-	\draw (23.05,-20.2) node [below] {$1$};
-	\draw [black] (32.2,-19.7) -- (37.5,-19.7);
-	\fill [black] (37.5,-19.7) -- (36.7,-19.2) -- (36.7,-20.2);
-	\draw (34.85,-20.2) node [below] {$0$};
-	\draw [black] (43.5,-19.7) -- (48.8,-19.7);
-	\fill [black] (48.8,-19.7) -- (48,-19.2) -- (48,-20.2);
-	\draw (46.15,-20.2) node [below] {$0$};
-	\draw [black] (54.8,-19.7) -- (60.5,-19.7);
-	\fill [black] (60.5,-19.7) -- (59.7,-19.2) -- (59.7,-20.2);
-	\draw (57.65,-20.2) node [below] {$1$};
-	\draw [black] (66.5,-19.7) -- (71.9,-19.7);
-	\fill [black] (71.9,-19.7) -- (71.1,-19.2) -- (71.1,-20.2);
-	\draw (69.2,-20.2) node [below] {$1$};
-	\draw [black] (9.3,-19.7) -- (13.9,-19.7);
-	\fill [black] (13.9,-19.7) -- (13.1,-19.2) -- (13.1,-20.2);
-	\draw (11.6,-20.2) node [below] {$1$};
-	\draw [black] (8.94,-21.12) -- (37.86,-36.68);
-	\fill [black] (37.86,-36.68) -- (37.39,-35.86) -- (36.92,-36.74);
-	\draw (22.26,-29.4) node [below] {$0$};
-	\draw [black] (19.27,-21.54) -- (38.13,-36.26);
-	\fill [black] (38.13,-36.26) -- (37.81,-35.37) -- (37.2,-36.16);
-	\draw (27.54,-29.4) node [below] {$0$};
-	\draw [black] (30.77,-22.26) -- (38.93,-35.54);
-	\fill [black] (38.93,-35.54) -- (38.94,-34.6) -- (38.09,-35.12);
-	\draw (34.21,-30.18) node [left] {$0$};
-	\draw [black] (40.5,-22.7) -- (40.5,-35.1);
-	\fill [black] (40.5,-35.1) -- (41,-34.3) -- (40,-34.3);
-	\draw (40,-28.9) node [left] {$0$};
-	\draw [black] (50.23,-22.26) -- (42.07,-35.54);
-	\fill [black] (42.07,-35.54) -- (42.91,-35.12) -- (42.06,-34.6);
-	\draw (45.51,-27.62) node [left] {$0$};
-	\draw [black] (61.16,-21.57) -- (42.84,-36.23);
-	\fill [black] (42.84,-36.23) -- (43.78,-36.12) -- (43.15,-35.34);
-	\draw (50.84,-28.41) node [above] {$0$};
-	\draw [black] (72.25,-21.11) -- (43.15,-36.69);
-	\fill [black] (43.15,-36.69) -- (44.09,-36.75) -- (43.61,-35.87);
-	\draw (56.56,-28.4) node [above] {$0$};
-	\end{tikzpicture}
-\end{center}
-Dobbiamo dimostrare che $x\in L \Leftrightarrow L(m)$:
-\begin{enumerate}
-	\item $x\in L \Rightarrow x \in L(m)$\\
-	Essendo un linguaggio finito, non è difficile dimostrare che l'unica stringa riconosciuta dall'automa è $110011$.
-	$$\delta(q_0,110011)=q_6\in F \greenmark$$
-	\item $x\notin L \Rightarrow x \notin L(m)$\\
-	Essendo un linguaggio finito, qualsiasi stringa diversa da $110011$ non viene riconosciuta.
-\end{enumerate}
-Abbiamo quindi dimostrato la doppia implicazione e con essa la \textit{correttezza} del nostro automa.
+Essendo i linguaggi finiti sono anche regolari.
 
 Adesso guardiamo l'unione in $n$ del linguaggio $A_{m,n}$:
 $$ B_m = \bigcup_{n\in\mathbb{N}} A_{m,n} $$
@@ -607,116 +579,15 @@ $$ B_m = \bigcup_{n\in\mathbb{N}} A_{m,n} $$
 	\item $B_1=(1^{2n}001)^n$
 	\item $B_2=(1^{2n}0011)^n$
 \end{itemize}
-Notiamo che, al variare di $m$, otteniamo sempre e comunque un linguaggio CF.
-Procediamo quindi con il pumping lemma, la grammatica e la dimostrazione della grammatica.
-\textbf{Fase 1: Pumping Lemma}\\
-In questa fase ci basta prendere una stringa appartenente al linguaggio e dimostrare che ‘‘pompandone’’ una parte noi usciamo dal linguaggio.
-Ricordiamoci che nell'applicare il pumping lemma dobbiamo sottostare a dei vincoli:
+Notiamo che, al variare di $m$, otteniamo sempre e comunque un linguaggio non CF.
+Procediamo quindi con il pumping lemma per i linguaggi non CF.\\
 \begin{itemize}
 	\item $z=uvw$
 	\item $|uv|\leq n$
 	\item $|v|>0$
 	\item $\forall i \in \mathbb{N}.uv^iw\in L \text{ con }i\geq0$
 \end{itemize}
-Ovviamente non siamo stupidi, quindi scegliamo una stringa facile, in questo caso $z=0^n1^n$.
-L'unica suddivisione possibile è:
-\begin{center}
-	\begin{tikzpicture}
-	% String rectangle
-	\draw (0,0.75) -- (0,1.25) node(0){};
-	\draw (0,0.75) -- (5,0.75) node[midway,above]{0};
-	\draw (5,0.75) -- (5,1.25) node(5){};
-	\draw (5,0.75) -- (10,0.75) node[midway,above]{1};
-	\draw (10,0.75) -- (10,1.25) node(10){};
-	
-	% Bracket rectangle
-	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] (0.north east) -- (5.north west) node [midway, above=0.2cm] {n};
-	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] (5.north east) -- (10.north west) node [midway, above=0.2cm] {n};
-	
-	% String division rectangle
-	\draw (0,0) -- (0,0.5);
-	\draw (0,0) -- (2.5,0) node[midway,above]{$u$};
-	\draw (2.5,0) -- (2.5,0.5);
-	\draw (2.5,0) -- (5,0) node[midway,above]{$v$};
-	\draw (5,0) -- (5,0.5);
-	\draw (5,0) -- (10,0) node[midway,above]{$w$};
-	\draw (10,0) -- (10,0.5);
-	\end{tikzpicture}
-\end{center}
-La stringa apparterrà al linguaggio solamente se $0^a1^b\in L \Leftrightarrow a=b$.\\
-La nostra stringa $z$ sarà quindi composta da $0^{k-|v|}0^{\textbf{i}|v|}1^k$. Per soddisfare la condizione appena scritta sopra $k-|v|+|v|i=k$, quindi:\\
-$-|v|+|v|i=0$\\
-$|v|(i-1)=0$\\
-Ma questo è un assurdo! Infatti $|v|$ non può essere uguale a $0$ per i vincoli del pumping lemma.
-Vediamo che per $i=0 \wedge i\geq2$ usciamo dal linguaggio, quindi possiamo dire che è sicuramente non regolare. $\greenmark$\\
-\textbf{Fase 2: Grammatica}\\
-Una possibile grammatica per questo linguaggio è:
-$$S \rightarrow 0S1|01|10$$
-Ed ecco una possibile derivazione:
-\begin{center}
-	\begin{tikzpicture}
-	\Tree
-	[.\blue{\blue{S}}
-	[.0\blue{S}1
-	[.00\blue{S}11	001011 ]
-	[.01\blue{S}01 011011 ]
-	[.0011  ]
-	[.0101  ]
-	]
-	[.1\blue{S}0
-	[.10\blue{S}10 101010 ]
-	[.11\blue{S}00 111000 ]
-	[.1010  ]
-	[.1100  ]
-	]
-	[.01  ]
-	[.10  ]
-	]
-	\end{tikzpicture}
-\end{center}
-\textbf{Fase 3: Dimostrazione della grammatica}\\
-Per dimostrare la correttezza della nostra grammatica, dobbiamo dimostrare la seguente condizione:
-$$x\in L \Leftrightarrow S \Rightarrow_* x$$
-Essendo una doppia implicazione, dimostreremo separatamente
-\begin{enumerate}
-	\item $x\in L \Rightarrow S \Rightarrow_* x $, che si dimostra per \textit{induzione} sulla lunghezza della stringa
-	\item $ S \Rightarrow_i k \Rightarrow x \in L$, che si dimostra per \textit{induzione} sul numero di passi di derivazione
-\end{enumerate}
-\begin{enumerate}
-	\item $x\in L \Rightarrow S \Rightarrow_* x $\\
-	\textbf{Passo base}\\
-	$y=01 \qquad y \in L$ ed $\exists S\Rightarrow 01 \greenmark $ (esiste una derivazione S che porta ad $01$).\\		$y=10 \qquad y \in L$ ed $\exists S\Rightarrow 10 \greenmark $ (esiste una derivazione S che porta ad $10$).\\
-	\textbf{Passo induttivo}\\
-	Consideriamo $y \in \varepsilon^*$ tale che $|y|<n$ e supponiamo che $\forall y \in L \Rightarrow S \Rightarrow_* y$.\\
-	Allora prendiamo $|x|\geq n$ e sapendo che $y$ è composto come $y=0^k1^k$, $x$ sarà $0^m1^m$ con $m>k$. Procediamo prendendo $m=k+1$:
-	$$ x=0^{k+1}1^{k+1}$$
-	Sappiamo per ipotesi che esiste una derivazione  $S\Rightarrow_i 0^k1^k$, quindi
-	$$\exists S \Rightarrow y \rightarrow \exists S \Rightarrow_i 0^k1^k$$
-	ma se esiste questa esiste anche la derivazione precedente, ovvero
-	$$\exists S \Rightarrow_{i-1} 0^{k-1}S1^{k-1} ...$$
-	essendo che la produzione $S\rightarrow 0S1$ appartiene all'insieme delle possibili produzioni, posso sostituire:
-	$$... \Rightarrow_i 0^{k-1}0S11^{k-1} \Rightarrow_{i+1} 0^k011^k = 0^{k+1}1^{k+1} = x \greenmark$$
-	In pratica siamo tornati indietro di un passo e abbiamo applicato una sostituzione che ci conducesse alla stringa $x$.\\
-	Ripetiamo lo stesso procedimento per $y=1^k0^k$ e $x=1^{k+1}0^{k+1}$:
-	$$\exists S \Rightarrow y \rightarrow \exists S \Rightarrow_i 1^k0^k \Rightarrow_{i-1} 1^{k-1}S0^{k-1}$$
-	$$\Rightarrow_i 1^{k-1}1S00^{k-1} \Rightarrow_{i+1} 1^k100^k = 1^{k+1}0^{k+1} = x \greenmark$$
-	
-	\item $ S \Rightarrow_i k \Rightarrow x \in L$\\
-	\textbf{Passo base}\\
-	$S\rightarrow 01 \qquad x=01 \quad x \in L$\\
-	$S\rightarrow 10 \qquad x=10 \quad x \in L$\\
-	\textbf{Passo induttivo}\\
-	$\forall i \leq n \quad S \Rightarrow_i y \Rightarrow y \in L $ (in $i$ passi otteniamo una stringa $\in L$, per ogni $i\leq n$).
-	Sappiamo che $y$ sarà nella forma $0^k1^k$ visto che $\in L$, quindi $S \Rightarrow_i 0^k1^k$. Ma se esiste quella produzione, allora
-	esisterà anche quella precedente. Con lo stesso gioco che abbiamo applicato nella dimostrazione precedente, andiamo indietro per poi
-	andare avanti con una produzione:
-	$$S \Rightarrow_i 0^k1^k \Rightarrow \exists S \Rightarrow_{i-1} 0^{k-1}S1^{k-1}$$
-	$$\Rightarrow_i 0^{k-1}0S11^{k-1} \Rightarrow_{i+1} 0^k011^k = 0^{k+1}1^{k+1} \in L \greenmark$$
-	Per $y=1^k0^k$:
-	$$S \Rightarrow_i 1^k0^k \Rightarrow \exists S \Rightarrow_{i-1} 1^{k-1}S0^{k-1}$$
-	$$\Rightarrow_i 1^{k-1}1S00^{k-1} \Rightarrow_{i+1} 1^k100^k = 1^{k+1}0^{k+1} \in L \greenmark$$
-	In pratica mostriamo che andando avanti otteniamo una stringa che appartiene ancora al linguaggio.
-\end{enumerate}
+Scegliamo una stringa, $z=(1^{2n}00)^n$, ed elenchiamo le possibili suddivisioni.
 
 Per quanto riguarda l'unione in $m$ del linguaggio $A_{m,n}$:
 $$ C_n = \bigcup_{m\in\mathbb{N}} A_{m,n} $$
