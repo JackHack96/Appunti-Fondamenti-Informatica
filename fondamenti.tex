@@ -535,9 +535,9 @@ stanno in mezzo alle suddivisioni (ad esempio $v$ è composta da un po' di $a$ e
 È facile dimostrare come in questi casi il linguaggio ‘‘pompato’’ esca dal linguaggio originale.
 Facciamo vedere comunque il procedimento, prendendo come esempio il primo caso (d'ora in poi $k=n$). La stringa sarà composta come:
 \begin{equation*}
-	a^{k-\frac{|v|}{2}}(ab)^{|v|\textbf{i}}b^{k-\frac{|v|}{2}-|x|+\textbf{i}|x|}c^k
+	z=a^{k-\frac{|v|}{2}}(ab)^{|v|\textbf{i}}b^{k-\frac{|v|}{2}-|x|+\textbf{i}|x|}c^k
 \end{equation*}
-\textbf{N.B.}: $\frac{|v|}{2}$ è solo indicativo, non è proprio che dobbiamo prendere quel pezzo.
+\textbf{N.B.}: $\frac{|v|}{2}$ è solo indicativo, non è che dobbiamo prendere quel pezzo per forza.
 Ora abbiamo due casi:
 \begin{itemize}
 	\item $|v|=0$\\
@@ -551,7 +551,32 @@ Ora abbiamo due casi:
 	$k-\frac{|v|}{2}+2|v|+k-\frac{|v|}{2}+|x|=2k$ (la somma della lunghezza di $a$ e $b$ è $2k$ )\\
 	$|v|+|x|=0 \quad \Rightarrow$ impossibile, in quanto si violerebbe il vincolo $|vx|>0$.
 \end{itemize}
+La dimostrazione degli altri casi ‘‘cavallo’’ è analoga.
 
+Ora controlliamo il caso in cui $vx$ sia tutto compreso in $a$. La stringa sarà quindi composta in questo modo:
+\begin{equation*}
+	z=a^{k-|vx|+\textbf{i}|vx|}b^kc^k
+\end{equation*}
+Affinché sia valida, dobbiamo rispettare il seguente vincolo:
+\begin{align*}
+	&k-|vx|+\textbf{i}|vx|=k\\
+	&|vx|(i-1)=0\\
+	&|vx|=0 \quad \text{Impossibile}
+\end{align*}
+La dimostrazione per i casi 4 e 5 sono analoghe.
+
+Non ci resta che dimostrare i casi in cui $v$ e $x$ si trovino in sottoparti separate, come negli ultimi due casi.
+La stringa è così composta:
+\begin{equation*}
+	z=a^{k+|v|(i-1)}b^{k+|x|(i-1)}c^k
+\end{equation*}
+Quindi:
+\begin{align*}
+	&k+|v|(i-1)+k+|x|(i-1)=2k\\
+	&(i-1)(|v|+|x|)=0\\
+	&|v|+|x|=0 \quad \text{Impossibile}
+\end{align*}
+Ed ecco dimostrato che questo linguaggio non è CF.
 
 \chapter{Esercizi vari}
 Classificare le seguenti famiglie di linguaggi al variare di $n,m \in \mathbb{N}$ (N.B. $0\in\mathbb{N}$), motivando formalmente la risposta:
