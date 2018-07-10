@@ -296,7 +296,7 @@ Ma questo è un assurdo! Infatti $|v|$ non può essere uguale a $0$ per i vincol
 Vediamo che per $i=0 \wedge i\geq2$ usciamo dal linguaggio, quindi possiamo dire che è sicuramente non regolare. $\greenmark$\\
 \textbf{Fase 2: Grammatica}\\
 Una possibile grammatica per questo linguaggio è:
-$$S \rightarrow 0S1|01|10$$
+$$S \rightarrow 1S0|0S1|01|10|10S|01S|S10|01S$$
 Ed ecco una possibile derivazione:
 \begin{center}
 	\begin{tikzpicture}
@@ -316,6 +316,10 @@ Ed ecco una possibile derivazione:
 		]
 		[.01  ]
 		[.10  ]
+		[.10\blue{S}  ]
+		[.01\blue{S}  ]
+		[.\blue{S}10  ]
+		[.01\blue{S}  ]
 	]
 	\end{tikzpicture}
 \end{center}
