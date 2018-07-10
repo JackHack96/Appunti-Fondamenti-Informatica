@@ -218,7 +218,6 @@ Dobbiamo dimostrare che $x\in L \Leftrightarrow x\in L(n)$:
 	\item $x\notin L \Rightarrow x \notin L(m)$\\
 	\textbf{Passo base}\\
 	$x=0 \rightarrow \delta(q_0,0)=q_1 \notin F \greenmark$\\
-	$x=1 \rightarrow \delta(q_0,1)=q_1 \notin F \greenmark$\\
 	\textbf{Passo induttivo}\\
 	Supponiamo che $\forall x \text{ t.c. } |x|=n \quad x \notin L \Rightarrow x\notin L(n)$.\\
 	Prendiamo allora una stringa $y$ t.c. $|y|>n$ e $y=xa \text{ con }a\in\varepsilon$. Ricordiamoci che possiamo usare $\delta(\delta(q_0,x),a)$.\\
@@ -461,7 +460,7 @@ Essendo una doppia implicazione, dimostreremo separatamente
 \chapter{Linguaggi non liberi dal contesto}
 Quando un linguaggio richiede più di un singolo conteggio per essere riconosciuto, allora è molto probabile che non sia libero dal contesto.
 In quel caso, si procede utilizzando il \textbf{pumping lemma} per i linguaggi CF, in modo da dimostrare la sua non appartenenza a questa classe.
-A differenza del pumping lemma per i linguaggi regolari, le suddivisioni possibili sono molte di più, e bisogna dimostrare la fuoriuscita per ognuna di esse.
+A differenza del pumping lemma per i linguaggi regolari, le suddivisioni possibili sono molte di più, e bisogna dimostrare la fuoriuscita per ognuna di esse, quindi la rottura di palle è decisamente più elevata.
 
 Prendiamo in esempio il linguaggio
 $$L=\{a^nb^nc^n\}$$
@@ -727,6 +726,9 @@ Verifichiamo per ogni caso di violare le regole del pumping lemma, in modo da di
 
 	\item $z=1^{2k+|v|(\textbf{i}-1)}001^{2k+|x|(\textbf{i}-1)}00$\\
 	Affinché sia valida, deve valere $2k+|v|(\textbf{i}-1)=2k+|x|(\textbf{i}-1)$, quindi $|v|=|x|$. Il problema è che andiamo a violare il vincolo $|vwx|<2k$, quindi non va bene. \greenmark
+	
+	\item $z=1^{2k}0^{2+|v|(\textbf{i}-1)}1^{2k}0^2$\\
+	Affinché sia valida, deve valere $2+|v|(\textbf{i}-1)=2$, che implicherebbe $|v|=0$, quindi non va bene. \greenmark
 
 	\item Le dimostrazioni degli altri punti è analoga a quelle appena viste.
 \end{itemize}
@@ -843,7 +845,6 @@ Una grammatica che genera questo linguaggio è fatta in questo modo:
 	&S \rightarrow 111100B\\
 	&B \rightarrow 1B1|111100
 \end{align*}
-\pagebreak
 
 Mentre una possibile derivazione per questa grammatica è:
 \begin{center}
@@ -895,7 +896,7 @@ Essendo una doppia implicazione, dimostreremo separatamente
 	$$S \Rightarrow_i 1^40^21^k1^40^21^k \Rightarrow \exists S \Rightarrow_{i-1} 1^40^21^kB1^k$$
 	$$\Rightarrow_i 1^40^21^k1B11^k \Rightarrow_{i+1} 1^40^21^{k+1}1^40^21^{k+1} \in L \greenmark$$
 \end{enumerate}
-Se consideriamo $C_n$ con $n>2$, il linguaggio diventa non-CF, per cui dobbiamo dimostrarlo usando il pumping lemma.
+Se consideriamo $C_n$ con $n>2$, il linguaggio diventa non-CF, per cui dobbiamo dimostrarlo usando il pumping lemma. Facciamo la dimostrazione per $n=3$.
 \begin{itemize}
 	\item $\forall z = uvwxy$
 	\item $|z| \geq k$
@@ -903,111 +904,108 @@ Se consideriamo $C_n$ con $n>2$, il linguaggio diventa non-CF, per cui dobbiamo 
 	\item $|vx|>0$
 	\item $uv^iwx^iy\in L$
 \end{itemize}
-Scegliamo una stringa, $z=(1^{2n}001^m)^n$, ed elenchiamo le possibili suddivisioni.
-\begin{center}
-	\begin{tikzpicture}
-	% Defining main coordinates
-	\coordinate (a) at (0,0);
-	\coordinate (b) at (2,0);
-	\coordinate (c) at (6,0);
-	\coordinate (d) at (8,0);
-	\coordinate (e) at (12,0);
-	\coordinate (f) at (15,0);
-	
-	% Bracket rectangle
-	\def\y{0.5*18}
-	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(a)+(0,\y)$.north east) -- ($(b)+(0,\y)$.north west) node [midway, above=0.2cm] {$2n$};
-	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(b)+(0,\y)$.north east) -- ($(c)+(0,\y)$.north west) node [midway, above=0.2cm] {$2+m$};
-	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(c)+(0,\y)$.north east) -- ($(d)+(0,\y)$.north west) node [midway, above=0.2cm] {$2n$};
-	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(d)+(0,\y)$.north east) -- ($(e)+(0,\y)$.north west) node [midway, above=0.2cm] {$2+m$};
-	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(e)+(0,\y)$.north east) -- ($(f)+(0,\y)$.north west) node [midway, above=0.2cm] {$|z|-2(2n+2+m)$};
-	
-	% Original string rectangle
-	\def\y{0.5*17}
-	\draw ($(a)$) -- ($(a)+(0,\y+0.5)$) [dashed];
-	\draw ($(a)+(0,\y)$) -- ($(b)+(0,\y)$) [dashed] node[midway,above]{$1\dots1$};
-	
-	\draw ($(b)$) -- ($(b)+(0,\y+0.5)$) [dashed];
-	\draw ($(b)+(0,\y)$) -- ($(c)+(0,\y)$) [dashed] node[midway,above]{$0^21^m$};
-	
-	\draw ($(c)$) -- ($(c)+(0,\y+0.5)$) [dashed];
-	\draw ($(c)+(0,\y)$) -- ($(d)+(0,\y)$) [dashed] node[midway,above]{$1\dots1$};
-	
-	\draw ($(d)$) -- ($(d)+(0,\y+0.5)$) [dashed];
-	\draw ($(d)+(0,\y)$) -- ($(e)+(0,\y)$) [dashed] node[midway,above]{$0^21^m$};
-	
-	\draw ($(e)$) -- ($(e)+(0,\y+0.5)$) [dashed];
-	\draw ($(e)+(0,\y)$) -- ($(f)+(0,\y)$) [dashed] node[midway,above]{$\dots$};
-	
-	% Possible divisions
-	\def\y{0.5*16}
-	\draw ($(a)+(1,\y)$) node[above]{$vx$};
-	
-	\def\y{0.5*15}
-	\draw ($(b)+(-0.1,\y)$) node[above]{$v|x|$};
-	
-	\def\y{0.5*14}
-	\draw ($(b)+(0,\y)$) node[above]{$vx$};
-	
-	\def\y{0.5*13}
-	\draw ($(b)+(0.1,\y)$) node[above]{$|v|x$};
-	
-	\def\y{0.5*12}
-	\draw ($(b)+(2,\y)$) node[above]{$vx$};
-	
-	\def\y{0.5*11}
-	\draw ($(c)+(-0.1,\y)$) node[above]{$v|x|$};
-	
-	\def\y{0.5*10}
-	\draw ($(c)+(0,\y)$) node[above]{$vx$};
-	
-	\def\y{0.5*9}
-	\draw ($(c)+(0.1,\y)$) node[above]{$|v|x$};
-	
-	\def\y{0.5*8}
-	\draw ($(c)+(1,\y)$) node[above]{$vx$};
-	
-	\def\y{0.5*7}
-	\draw ($(d)+(-0.1,\y)$) node[above]{$v|x|$};
-	
-	\def\y{0.5*6}
-	\draw ($(d)+(0,\y)$) node[above]{$vx$};
-	
-	\def\y{0.5*5}
-	\draw ($(d)+(0.1,\y)$) node[above]{$|v|x$};
-	
-	\def\y{0.5*4}
-	\draw ($(d)+(2,\y)$) node[above]{$vx$};
-	
-	\def\y{0.5*3}
-	\draw ($(b)+(-0.2,\y)$) node[above]{$v$};
-	\draw ($(c)+(0.2,\y)$) node[above]{$x$};
-	
-	\def\y{0.5*2}
-	\draw ($(b)+(0,\y)$) node[above]{$|v|$};
-	\draw ($(c)+(0.2,\y)$) node[above]{$x$};
-	
-	\def\y{0.5}
-	\draw ($(b)+(-0.2,\y)$) node[above]{$v$};
-	\draw ($(c)+(0,\y)$) node[above]{$|x|$};
-	
-	\draw ($(b)$) node[above]{$|v|$};
-	\draw ($(c)$) node[above]{$|x|$};
-	\end{tikzpicture}
-\end{center}
+Scegliamo una stringa, $z=(1^{6}001^m)^3$, ed elenchiamo le possibili suddivisioni.
+%\begin{center}
+%	\begin{tikzpicture}
+%	% Defining main coordinates
+%	\coordinate (a) at (0,0);
+%	\coordinate (b) at (2,0);
+%	\coordinate (c) at (6,0);
+%	\coordinate (d) at (8,0);
+%	\coordinate (e) at (12,0);
+%	\coordinate (f) at (15,0);
+%	
+%	% Bracket rectangle
+%	\def\y{0.5*18}
+%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(a)+(0,\y)$.north east) -- ($(b)+(0,\y)$.north west) node [midway, above=0.2cm] {$2n+2$};
+%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(b)+(0,\y)$.north east) -- ($(c)+(0,\y)$.north west) node [midway, above=0.2cm] {$m$};
+%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(c)+(0,\y)$.north east) -- ($(d)+(0,\y)$.north west) node [midway, above=0.2cm] {$2n+2$};
+%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(d)+(0,\y)$.north east) -- ($(e)+(0,\y)$.north west) node [midway, above=0.2cm] {$m$};
+%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(e)+(0,\y)$.north east) -- ($(f)+(0,\y)$.north west) node [midway, above=0.2cm] {$|z|-2(2n+2+m)$};
+%	
+%	% Original string rectangle
+%	\def\y{0.5*17}
+%	\draw ($(a)$) -- ($(a)+(0,\y+0.5)$) [dashed];
+%	\draw ($(a)+(0,\y)$) -- ($(b)+(0,\y)$) [dashed] node[midway,above]{$1\dots10^2$};
+%	
+%	\draw ($(b)+(0,\y)$) -- ($(c)+(0,\y)$) [dashed] node[midway,above]{$1^m$};
+%	
+%	\draw ($(c)$) -- ($(c)+(0,\y+0.5)$) [dashed];
+%	\draw ($(c)+(0,\y)$) -- ($(d)+(0,\y)$) [dashed] node[midway,above]{$1\dots10^2$};
+%	
+%	\draw ($(d)+(0,\y)$) -- ($(e)+(0,\y)$) [dashed] node[midway,above]{$1^m$};
+%	
+%	\draw ($(e)$) -- ($(e)+(0,\y+0.5)$) [dashed];
+%	\draw ($(e)+(0,\y)$) -- ($(f)+(0,\y)$) [dashed] node[midway,above]{$\dots$};
+%	
+%	% Possible divisions
+%	\def\y{0.5*16}
+%	\draw ($(b)+(2,\y)$) node[above]{$vx$};
+%	
+%	\def\y{0.5*15}
+%	\draw ($(c)+(-0.1,\y)$) node[above]{$v|x|$};
+%	
+%	\def\y{0.5*14}
+%	\draw ($(c)+(0,\y)$) node[above]{$vx$};
+%	
+%	\def\y{0.5*13}
+%	\draw ($(c)+(0.1,\y)$) node[above]{$|v|x$};
+%	
+%	\def\y{0.5*12}
+%	\draw ($(d)+(2,\y)$) node[above]{$vx$};
+%	
+%	\def\y{0.5*11}
+%	\draw ($(e)+(-0.1,\y)$) node[above]{$v|x|$};
+%	
+%	\def\y{0.5*10}
+%	\draw ($(e)+(0,\y)$) node[above]{$vx$};
+%	
+%	\def\y{0.5*9}
+%	\draw ($(e)+(0.1,\y)$) node[above]{$|v|x$};
+%	
+%	\def\y{0.5*8}
+%	\draw ($(e)+(1,\y)$) node[above]{$vx$};
+%	
+%	\def\y{0.5*7}
+%	\draw ($(d)+(-0.1,\y)$) node[above]{$v|x|$};
+%	
+%	\def\y{0.5*6}
+%	\draw ($(d)+(0,\y)$) node[above]{$vx$};
+%	
+%	\def\y{0.5*5}
+%	\draw ($(d)+(0.1,\y)$) node[above]{$|v|x$};
+%	
+%	\def\y{0.5*4}
+%	\draw ($(d)+(2,\y)$) node[above]{$vx$};
+%	
+%	\def\y{0.5*3}
+%	\draw ($(b)+(-0.2,\y)$) node[above]{$v$};
+%	\draw ($(c)+(0.2,\y)$) node[above]{$x$};
+%	
+%	\def\y{0.5*2}
+%	\draw ($(b)+(0,\y)$) node[above]{$|v|$};
+%	\draw ($(c)+(0.2,\y)$) node[above]{$x$};
+%	
+%	\def\y{0.5}
+%	\draw ($(b)+(-0.2,\y)$) node[above]{$v$};
+%	\draw ($(c)+(0,\y)$) node[above]{$|x|$};
+%	
+%	\draw ($(b)$) node[above]{$|v|$};
+%	\draw ($(c)$) node[above]{$|x|$};
+%	\end{tikzpicture}
+%\end{center}
 Verifichiamo per ogni caso di violare le regole del pumping lemma, in modo da dimostrare che questo linguaggio non è CF.
 \begin{itemize}
-	\item $z=1^{2k-|vx|+|vx|\textbf{i}}0^21^m1^{2k}0^2$\\
-	Affinché sia valida, deve valere $2k+|vx|(i-1)=2k$, quindi $|vx|(i-1)=0$, che però viola la condizione $|vx|>0$. \greenmark
+	\item $z=1^{6+|vx|(\textbf{i}-1)}0^21^k1^60^21^k1^60^21^k$\\
+	Affinché sia valida, deve valere $6+|vx|(i-1)=6$, quindi $|vx|(i-1)=0$, che però viola la condizione $|vx|>0$. \greenmark
 	
-	\item $z=1^{2k-|v|+\textbf{i}|v|-\frac{|x|}{2}}(10)^{|x|\textbf{i}}0^{2-\frac{|x|}{2}}1^{2k}0^2$\\
+	\item $z=1^{6+|v|(\textbf{i}-1)-\frac{|x|}{2}}(10)^{|x|\textbf{i}}0^{2-\frac{|x|}{2}}1^k1^60^21^k1^60^21^k$\\
 	Distinguiamo due casi:
 	\begin{itemize}
 		\item $|x|=0$\\
-		$1^{2k+|v|(\textbf{i}-1)}0^21^{2k}0^2 \Rightarrow 2k+|v|(\textbf{i}-1)=2k \Rightarrow |v|=0$ \textbf{IMPOSSIBILE} \greenmark
+		$1^{6+|v|(\textbf{i}-1)}0^21^k1^60^21^k1^60^21^k \Rightarrow \\6+|v|(\textbf{i}-1)=6 \Rightarrow |v|=0$ \textbf{IMPOSSIBILE} \greenmark
 		\item $|x|>0$\\
-		$1^{2k+|v|(\textbf{i}-1)-\frac{|x|}{2}}(10)^{|x|\textbf{i}}0^{2-\frac{|x|}{2}}1^{2k}$\\
-		per $i=2 \Rightarrow 1^{2k+|v|-\frac{|x|}{2}}10100^{2-\frac{|x|}{2}}1^{2k} \notin L$ \greenmark
+		per $i=2 \Rightarrow 1^{6+|v|-\frac{|x|}{2}}(10)^{2|x|}0^{2-\frac{|x|}{2}}1^k1^60^21^k1^60^21^k \notin L$ \greenmark
 	\end{itemize}
 	
 	\item $z=1^{2k+|v|(\textbf{i}-1)}0^{2+|x|(\textbf{i}-1)}1^{2k}0^2$\\
