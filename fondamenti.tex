@@ -584,7 +584,7 @@ Quindi:
 \end{align*}
 Ed ecco dimostrato che questo linguaggio non è CF.
 
-\chapter{Esercizi vari}
+\chapter{Esercizio d'esame}
 Classificare le seguenti famiglie di linguaggi al variare di $n,m \in \mathbb{N}$ (N.B. $0\in\mathbb{N}$), motivando formalmente la risposta:
 \begin{align*}
 	&A_{m,n} =\{ \sigma \in \{1,0\}^* | \text{ } \sigma = (1^{2n}001^m)^n \}\\
@@ -901,103 +901,6 @@ Essendo una doppia implicazione, dimostreremo separatamente
 	$$\Rightarrow_i 1^40^21^k1B11^k \Rightarrow_{i+1} 1^40^21^{k+1}1^40^21^{k+1} \in L \greenmark$$
 \end{enumerate}
 Se consideriamo $C_n$ con $n>2$, il linguaggio diventa non-CF, per cui dobbiamo dimostrarlo usando il pumping lemma. Facciamo la dimostrazione per $n=3$.
-\begin{itemize}
-	\item $\forall z = uvwxy$
-	\item $|z| \geq k$
-	\item $|vwx| \leq k$
-	\item $|vx|>0$
-	\item $uv^iwx^iy\in L$
-\end{itemize}
-Scegliamo una stringa, $z=(1^{6}001^m)^3$, ed elenchiamo le possibili suddivisioni.
-%\begin{center}
-%	\begin{tikzpicture}
-%	% Defining main coordinates
-%	\coordinate (a) at (0,0);
-%	\coordinate (b) at (2,0);
-%	\coordinate (c) at (6,0);
-%	\coordinate (d) at (8,0);
-%	\coordinate (e) at (12,0);
-%	\coordinate (f) at (15,0);
-%	
-%	% Bracket rectangle
-%	\def\y{0.5*18}
-%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(a)+(0,\y)$.north east) -- ($(b)+(0,\y)$.north west) node [midway, above=0.2cm] {$2n+2$};
-%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(b)+(0,\y)$.north east) -- ($(c)+(0,\y)$.north west) node [midway, above=0.2cm] {$m$};
-%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(c)+(0,\y)$.north east) -- ($(d)+(0,\y)$.north west) node [midway, above=0.2cm] {$2n+2$};
-%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(d)+(0,\y)$.north east) -- ($(e)+(0,\y)$.north west) node [midway, above=0.2cm] {$m$};
-%	\draw [decorate, decoration={brace, amplitude=5pt, raise=2.5pt}] ($(e)+(0,\y)$.north east) -- ($(f)+(0,\y)$.north west) node [midway, above=0.2cm] {$|z|-2(2n+2+m)$};
-%	
-%	% Original string rectangle
-%	\def\y{0.5*17}
-%	\draw ($(a)$) -- ($(a)+(0,\y+0.5)$) [dashed];
-%	\draw ($(a)+(0,\y)$) -- ($(b)+(0,\y)$) [dashed] node[midway,above]{$1\dots10^2$};
-%	
-%	\draw ($(b)+(0,\y)$) -- ($(c)+(0,\y)$) [dashed] node[midway,above]{$1^m$};
-%	
-%	\draw ($(c)$) -- ($(c)+(0,\y+0.5)$) [dashed];
-%	\draw ($(c)+(0,\y)$) -- ($(d)+(0,\y)$) [dashed] node[midway,above]{$1\dots10^2$};
-%	
-%	\draw ($(d)+(0,\y)$) -- ($(e)+(0,\y)$) [dashed] node[midway,above]{$1^m$};
-%	
-%	\draw ($(e)$) -- ($(e)+(0,\y+0.5)$) [dashed];
-%	\draw ($(e)+(0,\y)$) -- ($(f)+(0,\y)$) [dashed] node[midway,above]{$\dots$};
-%	
-%	% Possible divisions
-%	\def\y{0.5*16}
-%	\draw ($(b)+(2,\y)$) node[above]{$vx$};
-%	
-%	\def\y{0.5*15}
-%	\draw ($(c)+(-0.1,\y)$) node[above]{$v|x|$};
-%	
-%	\def\y{0.5*14}
-%	\draw ($(c)+(0,\y)$) node[above]{$vx$};
-%	
-%	\def\y{0.5*13}
-%	\draw ($(c)+(0.1,\y)$) node[above]{$|v|x$};
-%	
-%	\def\y{0.5*12}
-%	\draw ($(d)+(2,\y)$) node[above]{$vx$};
-%	
-%	\def\y{0.5*11}
-%	\draw ($(e)+(-0.1,\y)$) node[above]{$v|x|$};
-%	
-%	\def\y{0.5*10}
-%	\draw ($(e)+(0,\y)$) node[above]{$vx$};
-%	
-%	\def\y{0.5*9}
-%	\draw ($(e)+(0.1,\y)$) node[above]{$|v|x$};
-%	
-%	\def\y{0.5*8}
-%	\draw ($(e)+(1,\y)$) node[above]{$vx$};
-%	
-%	\def\y{0.5*7}
-%	\draw ($(d)+(-0.1,\y)$) node[above]{$v|x|$};
-%	
-%	\def\y{0.5*6}
-%	\draw ($(d)+(0,\y)$) node[above]{$vx$};
-%	
-%	\def\y{0.5*5}
-%	\draw ($(d)+(0.1,\y)$) node[above]{$|v|x$};
-%	
-%	\def\y{0.5*4}
-%	\draw ($(d)+(2,\y)$) node[above]{$vx$};
-%	
-%	\def\y{0.5*3}
-%	\draw ($(b)+(-0.2,\y)$) node[above]{$v$};
-%	\draw ($(c)+(0.2,\y)$) node[above]{$x$};
-%	
-%	\def\y{0.5*2}
-%	\draw ($(b)+(0,\y)$) node[above]{$|v|$};
-%	\draw ($(c)+(0.2,\y)$) node[above]{$x$};
-%	
-%	\def\y{0.5}
-%	\draw ($(b)+(-0.2,\y)$) node[above]{$v$};
-%	\draw ($(c)+(0,\y)$) node[above]{$|x|$};
-%	
-%	\draw ($(b)$) node[above]{$|v|$};
-%	\draw ($(c)$) node[above]{$|x|$};
-%	\end{tikzpicture}
-%\end{center}
 Verifichiamo per ogni caso di violare le regole del pumping lemma, in modo da dimostrare che questo linguaggio non è CF.
 \begin{itemize}
 	\item $z=1^{6+|vx|(\textbf{i}-1)}0^21^k1^60^21^k1^60^21^k$\\
@@ -1012,12 +915,15 @@ Verifichiamo per ogni caso di violare le regole del pumping lemma, in modo da di
 		per $i=2 \Rightarrow 1^{6+|v|-\frac{|x|}{2}}(10)^{2|x|}0^{2-\frac{|x|}{2}}1^k1^60^21^k1^60^21^k \notin L$ \greenmark
 	\end{itemize}
 	
-	\item $z=1^{2k+|v|(\textbf{i}-1)}0^{2+|x|(\textbf{i}-1)}1^{2k}0^2$\\
-	Affinché sia valida, deve valere $2k+|v|(\textbf{i}-1)=2k$, quindi $|v|(i-1)=0$, che \textbf{non} viola la condizione $|vx|>0$ a patto che $|x|>0$.\\
+	\item $z=1^{6+|v|(\textbf{i}-1)}0^{2+|x|(\textbf{i}-1)}1^k1^60^21^k1^60^21^k$\\
+	Affinché sia valida, deve valere $6+|v|(\textbf{i}-1)=6$, quindi $|v|(i-1)=0$, che \textbf{non} viola la condizione $|vx|>0$ a patto che $|x|>0$.\\
 	Altra condizione da verificare è $2+|x|(\textbf{i}-1)=2$, quindi $|x|(i-1)=0$, che però viola la condizione $|vx|>0$ dato che dovrebbe essere vera anche $|v|>0$. \greenmark
 	
-	\item $z=1^{2k+|v|(\textbf{i}-1)}001^{2k+|x|(\textbf{i}-1)}00$\\
-	Affinché sia valida, deve valere $2k+|v|(\textbf{i}-1)=2k+|x|(\textbf{i}-1)$, quindi $|v|=|x|$. Il problema è che andiamo a violare il vincolo $|vwx|<2k$, quindi non va bene. \greenmark
+	\item $z=1^60^21^{k+|vx|(\textbf{i}-1)}1^60^21^k1^60^21^k$\\
+	Affinché sia valida, deve valere $k+|vx|(\textbf{i}-1)=k$, quindi $|vx|(i-1)=0$, che però viola la condizione $|vx|>0$. \greenmark
+	
+	\item $z=1^{6+|v|(\textbf{i}-1)}0^21^{k+|x|(\textbf{i}-1)}1^60^21^k1^60^21^k$\\
+	Affinché sia valida, deve valere $6+|v|(\textbf{i}-1)=6 \wedge k+|x|(\textbf{i}-1)=k$, quindi $|v|=0 \wedge |x|=0$. Il problema è che andiamo a violare il vincolo $|vx|>0$, quindi non va bene. \greenmark
 	
 	\item Le dimostrazioni degli altri punti è analoga a quelle appena viste.
 \end{itemize}
