@@ -1280,5 +1280,47 @@ Verifichiamo per ogni caso di violare le regole del pumping lemma, in modo da di
 \end{enumerate}
 
 \chapter{Teoria della ricorsione}
-TODO
+\textbf{Attenzione}! Avete presente il dolore di quando sbattete il mignolo del piede contro un angolo del muro?
+Ecco, questa parte vi farà capire che esistono dolori peggiori. Se come me siete piuttosto pratici, farete una fatica
+immensa per capire questa roba astrusa (io non l'ho capita nemmeno ora\dots).
+Fatta questa doverosa avvertenza, iniziamo subito facendo un ripasso della teoria dietro a questa roba.
+
+\paragraph{Funzioni parziali ricorsive}
+La prima cosa da capire è la definizione di \textbf{funzione ricorsiva}. Le funzioni ricorsive sono una classe di funzioni dai 
+numeri naturali ai numeri naturali ($\mathbb{N}\rightarrow\mathbb{N}$) che sono ‘‘calcolabili’’ in un qualche senso intuitivo.
+Possiamo anche dire che le funzioni ricorsive possono essere calcolate da una macchina di Turing.
+Diciamo che una funzione ricorsiva è \textbf{parziale} quando non è definita per tutti gli input.
+
+\paragraph{Insiemi ricorsivi e ricorsivamente enumerabili}
+Dopo aver visto cos'è una funzione parziale ricorsiva, vediamo cos'è un insieme ricorsivo.
+Dato $x$ un programma e $\varphi_x$ la funzione parziale ricorsiva calcolata dal programma, definiamo il \textbf{dominio} di $\varphi_x$ come:
+\begin{equation*}
+	W_x=\{y|\varphi_x(y)\downarrow \} \quad W_x \subseteq \mathbb{N}
+\end{equation*}
+Che vuol dire? Significa che il dominio della funziona \textit{calcolata} dal programma è l'insieme degli input per i quali termina (definizione da Capitan Ovvio).
+Ok, ora invece diciamo che un insieme $A$ è detto \textbf{ricorsivamente enumerabile} (r.e.) \textit{se esiste} una funzione parziale ricorsiva $\psi$ tale che
+\begin{equation*}
+	W_\psi=A \quad A \subseteq \mathbb{N}
+\end{equation*}
+In pratica se un certo insieme è l'insieme di input per i quali un programma (che calcola la funzione parziale) termina, allora si dice ricorsivamente enumerabile.
+Definiamo inoltre \textbf{funzione semicaratteristica} di un insieme $A$ r.e. la seguente funzione parziale ricorsiva:
+\begin{equation*}
+	\psi_A(x)=
+	\begin{cases}
+		1 \text{ se } x\in A\\
+		\uparrow \text{ se } x\notin A
+	\end{cases}
+\end{equation*}
+Questa funzione ci dice se un certo input $x\in\mathbb{N}$ appartiene all'insieme $A$, quindi se appartiene all'insieme dei possibili input
+che fanno terminare il programma. Vediamo che in questo caso è possibile dire di si, ma non di no. Quando è possibile dire anche di no, si ha
+a che fare con una \textbf{funzione caratteristica} di un \textbf{insieme ricorsivo}:
+\begin{equation*}
+	\psi_A(x)=
+	\begin{cases}
+		1 \text{ se } x\in A\\
+		0 \text{ se } x\notin A
+	\end{cases}
+\end{equation*}
+Notiamo che la ricorsività è più potente della ricorsiva enumerabilità, infatti se un insieme è ricorsivo allora è anche ricorsivamente enumerabile.
+
 \end{document}
