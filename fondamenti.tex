@@ -1322,5 +1322,148 @@ a che fare con una \textbf{funzione caratteristica} di un \textbf{insieme ricors
 	\end{cases}
 \end{equation*}
 Notiamo che la ricorsività è più potente della ricorsiva enumerabilità, infatti se un insieme è ricorsivo allora è anche ricorsivamente enumerabile.
+Esempi di insiemi noti che sono ricorsivi sono $\mathbb{N}$, $2\mathbb{N}$, $2\mathbb{N}+1$, tutti gli insiemi finiti, infatti per ciascuno di essi
+io riesco a costruire una funzione caratteristica che mi sa dire di si se un numero gli appartiene o no in caso contrario.
+
+\paragraph{Teorema di Post}
+Il teorema di Post dice che, dato un insieme $A$ ricorsivo, $A$ e $\bar{A}$ sono entrambi ricorsivamente enumerabili.
+
+\paragraph{Teorema di Kleene}
+Questo teorema afferma che le seguenti affermazioni sono equivalenti:
+\begin{itemize}
+	\item $A$ è r.e.
+	\item $A=range(\varphi)$ con $\varphi$ parziale ricorsiva
+	\item $A=\varnothing$ oppure $A=range(f)$ con $f$ totale ricorsiva
+\end{itemize}
+
+\paragraph{Altri teoremi}
+\begin{itemize}
+	\item $A$ è ricorsivo $\Rightarrow A=\varnothing$ oppure $A=range(f)$ con $f$ non decrescente.
+	\item Ogni insieme r.e. infinito ha un sottoinsieme ricorsivo infinito.
+	\item Se $t$ è una funzione totale ricorsiva allora $\exists e$ t.c. $\varphi_e=\varphi_{t(e)}$.
+\end{itemize}
+
+\paragraph{Proprietà estensionale}
+Consideriamo $\Pi$ come proprietà sulle MdT, $\Pi \subseteq \mathbb{N}$. Si dice che $\Pi$ è \textbf{estensionale} se
+\begin{equation*}
+	\forall(x,y)\in\mathbb{N}: x\in\Pi \wedge \varphi_x=\varphi_y \Rightarrow y\in\Pi
+\end{equation*}
+Ok sicuramente starete pensando ‘‘ma che c'è scritto?’’. Si capisce meglio con un esempio!
+Supponiamo che $\Pi$ sia la proprietà ‘‘$\{p|p\text{ = 174 righe}\}$’’, ovvero che un certo programma $p$ ha esattamente 174 righe di codice.
+Una proprietà è estensionale quando, preso un altro programma che calcola la stessa funzione, la proprietà si mantiene anche per quel programma.
+Visto che abbiamo detto che la proprietà è di avere 174 righe, è chiaro che non è estensionale, infatti posso avere un programma più lungo per esempio.
+
+\paragraph{Teorema di Rice}
+Sia $\Pi$ una proprietà estensionale. Essa è ricorsiva sse $\Pi=\varnothing$ oppure $\Pi=\mathbb{N}$.
+Detto in soldoni per ogni proprietà \textbf{non banale} delle funzioni ricorsive è \textbf{indecidibile} il problema di decidere (scusate il gioco di parole)
+quali funzioni soddisfino tale proprietà e quali no. Per proprietà banale in questo caso si intende una proprietà che non effettua alcuna discriminazione
+tra le funzioni calcolabili, cioè che vale o per tutte o per nessuna (tipo appunto l'essere vuoto o l'essere tutto $\mathbb{N}$).
+
+\paragraph{L'insieme $K$ e il suo complementare}
+Esistono insiemi che sono ricorsivamente enumerabili ma non sono ricorsivi? Si, e l'insieme che stiamo per scoprire ci accompagnerà sempre
+nei nostri incubi: sto parlando del famigerato insieme $K$. Questo insieme è definito come ‘‘l'insieme dei programmi che terminano con input
+sé stessi’’:
+\begin{equation*}
+K=\{x|\varphi_x(x)\downarrow\} = \{x|x\in W_x\}
+\end{equation*}
+Non riusciamo infatti a dire che un programma ‘‘non termina’’, per farlo dovremmo essere immortali e aspettare un tempo infinito.
+Oltre a lui c'è anche suo fratello, e fra i due non saprei dire chi è il peggiore. In ogni caso il suo complementare è $\bar{K}$,
+che ovviamente è l'insieme di tutti i programmi che \textbf{non} terminano con input se stessi.
+Se vi state chiedendo: ‘‘Ma cosa vuol dire dare in input sé stesso’’, beh sappiate che non l'ho capito nemmeno ora. Forse vuol dire
+fare l'hash del codice e darlo in pasto a se stesso (e se il programma non prende input?). Boh, robe da informatica teorica\dots
+
+\paragraph{Riduzione funzionale}
+Questa è una cosa che useremo negli esercizi. Si dice che un insieme si \textit{riduce funzionalmente} ad un altro se:
+\begin{equation*}
+A \preceq_f B \Leftrightarrow \exists f \text{ totale ricorsiva t.c. } x \in A \Rightarrow f(x)\in B
+\end{equation*}
+Ad esempio, consideriamo l'insieme $K_1=\{<x,y>|y\in W_x\}$ (l'insieme dei programmi che terminano con input $x$ termina anche con $y$) e dimostriamo che si riduce
+funzionalmente a $K$.
+\begin{itemize}
+	\item $x\in K \Rightarrow \varphi_x(x)\downarrow$; $<x,x> \in W_x$
+	\item $x\notin K \Rightarrow \varphi_x(x)\uparrow$; $<x,x> \notin K_1$
+\end{itemize}
+Un'importante osservazione è che se $A\preceq_f B \iff \bar{A} \preceq_f \bar{B}$.
+
+\paragraph{Teorema fondamentale della riducibilità}
+Il teorema afferma che:
+\begin{itemize}
+	\item Se $A \preceq_f B$ e $B$ è r.e. $\Rightarrow A$ è r.e.
+	\item Se $A \preceq_f B$ e $B$ è ricorsivo $\Rightarrow A$ è ricorsivo
+\end{itemize}
+Anche questo teorema viene usato negli esercizi.
+
+Facciamo un esempio: consideriamo l'insieme $A=\{x\mid|W_x|<\omega\}$, ovvero tutti i programmi con dominio finito.
+La condizione di appartenenza ad $A$ è dunque 
+\begin{align*}
+	x\in A \quad \iff& \quad g(x)\in\{x\mid|W_x|<\omega\}\\
+	\varphi_x(x)\downarrow \quad \iff& \quad |W_{g(x)}|<\omega
+\end{align*}
+Definiamo la funzione semicaratteristica $\psi$:
+\begin{equation*}
+	\psi_A(x,z)=
+	\begin{cases}
+		1 \text{ se } \varphi_x(x) \text{ \textbf{non} converge in meno di } z \text{ passi}\\
+		\uparrow \text{ altrimenti}
+	\end{cases}
+\end{equation*}
+\begin{itemize}
+	\item Se $x \in A \Leftrightarrow \exists n . \varphi_x(x) \downarrow^n$ (esiste un $n$ tale per cui $\varphi_x(x)$ termina in $n$ passi).
+	Quindi $\forall z \in [0 \dots n-1] \mbox{ } \varphi_x(x)\uparrow$.
+	\item Se $x \notin A \Leftrightarrow \varphi_x(x)$ risponde sempre 1 poiché $\forall z \in [n, +\infty) \mbox{ } \varphi_{g(x)}(z)\uparrow$, che implica
+	$|W_{g(x)}|=\omega$.
+\end{itemize}
+
+\paragraph{Insiemi creativi e produttivi}
+\begin{itemize}
+	\item Si definisce \textbf{insieme produttivo} un insieme $A$ se esiste una funzione totale ricorsiva $f$ t.c.:
+	\begin{equation*}
+		\forall x\in\mathbb{N}. (W_x \subseteq A \Rightarrow f(x)\in A \setminus W_x)
+	\end{equation*}
+	\item Si definisce \textbf{insieme creativo} un insieme $A$ se è r.e. ed il suo complemento è produttivo:
+	\begin{equation*}
+		A \in RE \text{ e } \forall x \in \mathbb{N}. (W_x \subseteq \bar{A} \Rightarrow f(x)\in\bar{A}\setminus W_x)
+	\end{equation*}
+\end{itemize}
+Un insieme quindi è produttivo se per ogni tentativo di enumerarlo in modo effettivo mediante un algoritmo di indice $x$ (ovvero per ogni $W_x \subseteq A$),
+esiste una trasformazione effettiva di di $x$ in un punto di $A$ che sfugge all'enumerazione. Cosa vuol dire nella pratica? Non ne ho idea.
+Essendo un ‘‘praticone’’ preferisco pensarla in questo modo: dato un insieme $A$, riesco a pensare ad un algoritmo che converge se $x\in A$?
+Ad esempio, consideriamo
+$$A=\{x|\varphi_x(1)=n\} \quad \text{ con } \in\mathbb{N},$$
+che è l'insieme dei programmi che, ricevendo in input $1$, danno in output il numero $n$. Riesco a pensare ad un algoritmo che verifica questo?
+Si, quindi è creativo.\\
+Importante conseguenza di ciò è che:
+\begin{itemize}
+	\item $A$ creativo $\Rightarrow \bar{A}$ produttivo
+	\item $A$ produttivo $\Rightarrow A$ non r.e.
+	\item $A$ creativo $\Rightarrow A$ non ricorsivo
+\end{itemize}
+
+\chapter{Esercizi vari}
+Classificare nella teoria della ricorsione matematica il seguente insieme:
+\begin{equation*}
+	A=\{x|\varphi_x(ack(x,x,x))=7\} \text{, dove $ack()$ è la funzione di Ackermann.}
+\end{equation*}
+
+La prima cosa da fare è assicurarsi di capire bene il testo dell'esercizio.
+Qui stiamo considerando l'insieme dei programmi che, ricevendo in input l'\textit{output} della funzione di Ackermann, danno in output $7$.
+Per aiutarsi a identificare la tipologia dell'insieme, è buona pratica considerare anche l'insieme complementare. In questo caso, il complementare di $A$ è
+$$\bar{A}=\{x|\varphi_x(ack(x,x,x))\ne 7\}$$
+Che è quindi l'insieme dei programmi che ricevendo in input l'output della funzione di Ackermann \textbf{non} danno $7$.
+Riesco a pensare ad un algoritmo che prende il nostro programma $x$, gli passa in input la funzione di Ackermann (che termina sempre) e verifica che il risultato sia 7?
+Certamente! Quindi è creativo! Di conseguenza il suo complementare è produttivo, per cui possiamo ridurre $A$ a $K$ (e di conseguenza $\bar{A}$ a $\bar{K}$).
+Definiamo la funzione semicaratteristica $\psi_A$:
+\begin{equation*}
+	\psi_A(x,y)=
+	\psi_{g(x)}(y)=
+	\begin{cases}
+		7 \text{ se } x \in K\\
+		\uparrow \text{ altrimenti}
+	\end{cases}\\
+\end{equation*}
+\begin{itemize}
+	\item $x\in K.\varphi_{g(x)}(y)=7 \Rightarrow \varphi_{g(x)}(ack(g(x),g(x),g(x)))=7 \Rightarrow g(x) \in A$
+	\item $x\notin K.\varphi_{g(x)}(y)\uparrow \Rightarrow \varphi_{g(x)}(ack(g(x),g(x),g(x)))\uparrow \Rightarrow g(x) \notin A$ 
+\end{itemize}
 
 \end{document}
