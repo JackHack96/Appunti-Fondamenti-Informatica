@@ -45,7 +45,7 @@ Mi rendo conto che la materia in questione sia piuttosto ostica, ma vi posso ass
 Ovviamente è \textbf{fondamentale} fare molti esercizi, in modo da verificare e consolidare l'apprendimento. Cercherò di essere il più chiaro possibile, ma non essendo mai stato bravo
 a spiegare potrebbero esserci dei punti non chiari, per i quali chiedo scusa in anticipo.
 
-Voglio ringraziare Jenny Bonato per l'immensa pazienza che ha avuto per insegnare a questo somaro le basi di questa materia.
+Voglio ringraziare Jenny Bonato ed Elia Brentarolli per l'immensa pazienza che hanno avuto per insegnare a questo somaro le basi di questa materia.
 
 Qualora dovreste trovare degli errori, scrivetemi a \href{mailto:matteoiervasi@gmail.com}{matteoiervasi@gmail.com}, oppure fate direttamente una ‘‘\textit{pull request}’’ nel repository GitHub.
 
@@ -612,7 +612,7 @@ Ora dimostriamo caso per caso che, ‘‘pompando’’, si esce dal linguaggio.
 \end{enumerate}
 Abbiamo verificato per ogni caso che il linguaggio ‘‘pompato’’ esce dal linguaggio stesso, dimostrando quindi che non è CF. \greenmark
 
-\chapter{Esercizio d'esame}
+\chapter{Esercizi vari sui linguaggi}
 Classificare le seguenti famiglie di linguaggi al variare di $n,m \in \mathbb{N}$ (N.B. $0\in\mathbb{N}$), motivando formalmente la risposta:
 \begin{align*}
 	&A_{m,n}=\{ \sigma \in \{1,0\}^* | \text{ } \sigma = (1^{2n}001^m)^n \}\\
@@ -1279,11 +1279,43 @@ Verifichiamo per ogni caso di violare le regole del pumping lemma, in modo da di
     Considerando $i\rightarrow 2 \Rightarrow |v|+|x|=0$, che non è possibile. \greenmark
 \end{enumerate}
 
+Riporto un altro interessante esempio. Consideriamo il linguaggio:
+\begin{equation*}
+    L=\{0^n|n \text{ è primo}\}
+\end{equation*}
+Se $n$ fosse fissato, sarebbe un banalissimo linguaggio regolare, perché sarebbe finito. In questo caso però non solo $n$ non è fissato, ma avendo
+quella particolare condizione di essere primo, fa uscire il nostro linguaggio anche dai CF, relegandolo ai non-CF. Non esiste infatti automa in grado
+di stabilire se un numero è primo. Procediamo quindi con la dimostrazione tramite il pumping lemma CF.
+Non ci sono molte suddivisioni possibili, abbiamo solamente che $vx$ è sicuramente dentro $0^n$, per cui la nostra stringa sarà formata così:
+$$0^{n+|vx|(i-1)}$$
+Notiamo che il solito trucco di ridurre $|vx|$ a $0$ non funziona, per cui dobbiamo inventarci qualcosa.
+La soluzione è considerare la somma degli esponenti come un numero $n'$ t.c. è primo, prendere una certa $i$ ad-hoc per poi arrivare ad un assurdo, nella maniera seguente:
+\begin{align*}
+    &n+(i-1)|vx|=n', \qquad \text{prendo } i=n+1\\
+    &n+(n+1-1)|vx|=n'\\
+    &n+n|vx|=n'\\
+    &n(|vx|+1)=n'
+\end{align*}
+Ma $n(|vx|+1)$ è divisibile sia per $n$ che per $(|vx|+1)$, il che contraddice il fatto che $n'$ sia primo, quindi abbiamo trovato un assurdo, che ci costringe
+a riconoscere che il linguaggio è non-CF.
+
 \chapter{Teoria della ricorsione}
 \textbf{Attenzione}! Avete presente il dolore di quando sbattete il mignolo del piede contro un angolo del muro?
 Ecco, questa parte vi farà capire che esistono dolori peggiori. Se come me siete piuttosto pratici, farete una fatica
 immensa per capire questa roba astrusa (io non l'ho capita nemmeno ora\dots).
 Fatta questa doverosa avvertenza, iniziamo subito facendo un ripasso della teoria dietro a questa roba.
+
+\paragraph{Notazione}
+Facciamo una breve panoramica della notazione che andremo ad utilizzare.
+$$\varphi_{\textcolor{blue}{x}}(\textcolor{red}{y})=\textcolor{green}{z}$$
+\begin{itemize}
+    \item $\blue{x}$ Indice del programma, ma viene usato anche per indicare un programma $x$
+    \item $\varphi_{\blue{x}}$ Programma di indice $x$
+    \item $\textcolor{red}{y}$ Input $y$
+    \item $\textcolor{green}{z}$ Output $z$
+    \item $W_x$ Insieme degli input per i quali il programma termina (dominio del programma)
+    \item $range(x)$ Insieme degli output del programma (codominio del programma)
+\end{itemize}
 
 \paragraph{Funzioni parziali ricorsive}
 La prima cosa da capire è la definizione di \textbf{funzione ricorsiva}. Le funzioni ricorsive sono una classe di funzioni dai 
@@ -1439,7 +1471,41 @@ Importante conseguenza di ciò è che:
 	\item $A$ creativo $\Rightarrow A$ non ricorsivo
 \end{itemize}
 
-\chapter{Esercizi vari}
+\paragraph{Alcune scorciatoie utili}
+Riportiamo di seguito una serie di relazioni utili che si possono utilizzare negli esercizi.
+\begin{equation*}
+    f_w=\{f(x)|\varphi_x(f(x))\downarrow\}, f(x) \text{ totale ricorsiva}
+\end{equation*}
+Può essere riscritta come
+\begin{equation*}
+    f_w=\{f(x)|f(x)\in W_x\} \rightarrow RE
+\end{equation*}
+\linebreak
+Mostriamo ora una famiglia di insiemi, le cui composizioni sono ricorsivamente enumerabili:
+\begin{equation*}
+    f_w=\{f(x)|\varphi_{g(x)}(h(x))=C\} \rightarrow RE
+\end{equation*}
+dove $f(x),g(x),h(x)$ sono funzioni e $C$ è una costante (oppure una variabile $\in\mathbb{N}$).
+\linebreak
+
+\noindent
+Un'altra famiglia di insiemi è:
+\begin{equation*}
+    z=\{x|W_x=A\} \quad \text{e} \quad z=\{x|W_x\ne A\}, \text{ dove $A$ è un insieme}
+\end{equation*}
+Per $z=\{x|W_x=A\}$ valgono le seguenti affermazioni:
+\begin{itemize}
+    \item Se $A$ è produttivo $\rightarrow z=\varnothing$, quindi ricorsivo
+    \item Se $A$ è r.e. $\rightarrow z$ è produttivo
+\end{itemize}
+Mentre per $z=\{x|W_x\ne A\}$:
+\begin{itemize}
+    \item Se $A=\varnothing \rightarrow RE$, mediante la tecnica del \textit{dove tail}
+    \item Se $A=RE \rightarrow Z$ è produttivo
+    \item Se $A$ è produttivo $\rightarrow Z$ è ricorsivo
+\end{itemize}
+
+\chapter{Esercizi vari sulla teoria della ricorsione}
 Classificare nella teoria della ricorsione matematica il seguente insieme:
 \begin{equation*}
 	A=\{x|\varphi_x(ack(x,x,x))=7\} \text{, dove $ack()$ è la funzione di Ackermann.}
