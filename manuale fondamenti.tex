@@ -9,6 +9,7 @@
 \usepackage{xcolor}
 \usepackage{cancel}
 \usepackage{enumitem}
+\usepackage{listings}
 \hypersetup{
 	colorlinks,
 	citecolor=black,
@@ -1521,7 +1522,7 @@ Certamente! Quindi è creativo! Di conseguenza il suo complementare è produttiv
 Definiamo la funzione semicaratteristica $\psi_A$:
 \begin{equation*}
 	\psi_A(x,y)=
-	\psi_{g(x)}(y)=
+	\varphi_{g(x)}(y)=
 	\begin{cases}
 		7 \text{ se } x \in K\\
 		\uparrow \text{ altrimenti}
@@ -1542,7 +1543,7 @@ $$\bar{A}=\{x|W_x\ne \mathbb{N}\}$$
 Definiamo la funzione semicaratteristica $\psi_A$:
 \begin{equation*}
     \psi_A(x,y)=
-    \psi_{g(x)}(y)=
+    \varphi_{g(x)}(y)=
     \begin{cases}
         y \text{ se } \varphi_x(x) \text{ non converge in meno di $y$ passi}\\
         \uparrow \text{ altrimenti}
@@ -1551,6 +1552,88 @@ Definiamo la funzione semicaratteristica $\psi_A$:
 \begin{itemize}
     \item $x\in K.\exists \varphi_{g(x)}(x)\downarrow^n \Rightarrow \forall y \in [0,n-1] \varphi_{g(x)}(y)=y \Rightarrow W_{g(x)}=[0,n-1]\ne \mathbb{N} \Rightarrow g(x) \in \bar{A}$
     \item $x\notin K.\forall n \varphi_{g(x)}(x)\cancel{\downarrow}^n \Rightarrow \forall y \varphi_{g(x)}(y)=y \Rightarrow W_{g(x)}=\mathbb{N} \Rightarrow g(x) \notin \bar{A}$ 
+\end{itemize}
+
+\paragraph{3} Classificare nella teoria della ricorsione matematica il seguente insieme:
+\begin{equation*}
+	A=\{x|x_{MOD7} \in [0,3] \rightarrow \varphi_{xDIV7}(x^3+1)=x^7\}
+\end{equation*}
+Visto che l'implicazione fa schifo, la trasformo in un OR, in questo modo:
+\begin{equation*}
+	A=\{x|x_{MOD7} \notin [0,3] \vee \varphi_{xDIV7}(x^3+1)=x^7\}
+\end{equation*}
+Ok. Ora classifichiamo i due pezzi. $x|x_{MOD7} \notin [0,3]$ è sicuramente ricorsivo, infatti riesco con un programma a dire se $x\in[0,3]$ o no.
+L'altro invece, $\varphi_{xDIV7}(x^3+1)=x^7$, è creativo, per le regole scritte sopra.
+Per dimostrare la creatività, scriviamo una bozza dell'algoritmo e dimostro la produttività del negato.
+\begin{align*}
+	&\text{if(}x_{MOD7} \notin [0,3] \mbox{ }||\mbox{ } \varphi_{xDIV7}(x^3+1)==x^7)\\
+	&\quad \text{return }1\\
+	&\text{else}\\
+	&\quad \uparrow
+\end{align*}                   
+Quindi cerchiamo di ridurre $A$ a $K$. Ricordiamo che dobbiamo fare in modo che la nostra funzione dia in output $x^7$.
+Quindi scriviamo
+\begin{equation*}
+	\psi_A(x,y)=
+	\varphi_{g(x)}(y)=
+	\begin{cases}
+		(\sqrt[3]{y-1})^7 \text{ se } x \in K\\
+		\uparrow \text{ altrimenti}
+	\end{cases}
+\end{equation*}
+\begin{itemize}
+	\item $x\in K \rightarrow \varphi_{g(x)}(y)=(\sqrt[3]{y-1})^7 \rightarrow \forall y \varphi_{g(x)}((7g(x))^3+1)=(\sqrt[3]{(7g(x))^3+1-1})^7=(7g(x))^7 \rightarrow g(x) \in A$
+	\item $x\notin K \rightarrow \varphi_{g(x)}(y)\uparrow \rightarrow \varphi_{g(x)}((7g(x))^3+1)\uparrow \ne (7g(x))^7 \rightarrow g(x) \notin K$
+\end{itemize}
+
+\paragraph{4} Classificare nella teoria della ricorsione matematica il seguente insieme:
+\begin{equation*}
+	M=\{x|W_x=(2\mathbb{N}+1)\cap(3\mathbb{N}+2)\}
+\end{equation*}
+Questo è produttivo, dato che è composto da due ricorsivi. Anche il suo negato è produttivo:
+\begin{equation*}
+	\bar{M}=\{x|W_x\ne(2\mathbb{N}+1)\cap(3\mathbb{N}+2)\}
+\end{equation*}
+Quindi serve dimostrare la produttività per entrambi gli insiemi. Per comodità chiamiamo $D$ l'insieme $(2\mathbb{N}+1)\cap(3\mathbb{N}+2)$.
+Dimostriamo la produttività per $M$. Dobbiamo ridurre $M$ a $\bar{K}$, quindi $\bar{M}$ a $K$.
+Scriviamo una funzione parziale associata:
+\begin{equation*}
+	\psi_A(x,y)=
+	\varphi_{g(x)}(y)=
+	\begin{cases}
+		1 \text{ se } x \in K\\
+		\uparrow \text{ altrimenti}
+	\end{cases}
+\end{equation*}
+\begin{itemize}
+	\item $x\in K \rightarrow \varphi_{g(x)}(y)\downarrow \rightarrow W_x=\mathbb{N} \ne D \rightarrow g(x)\in\bar{M}$
+	\item $x\notin K \rightarrow \varphi_{g(x)}(y)\uparrow \rightarrow W_x=\varnothing \ne D$ $\rightarrow$ ma non va bene, $W_x$ deve essere uguale a $D$
+\end{itemize}
+Dobbiamo aggiungere una seconda condizione alla funzione parziale, e la mettiamo in OR con l'altra in modo da mantenere valido il primo punto.
+\begin{equation*}
+	\psi_A(x,y)=
+	\varphi_{g(x)}(y)=
+	\begin{cases}
+		1 \text{ se } x \in K \vee y \in D\\
+		\uparrow \text{ altrimenti}
+	\end{cases}
+\end{equation*}
+\begin{itemize}
+	\item $x\in K \rightarrow \varphi_{g(x)}(y)\downarrow \rightarrow W_x=\mathbb{N} \ne D \rightarrow g(x)\in\bar{M}$
+	\item $x\notin K \rightarrow \varphi_{g(x)}(y)\downarrow \iff y\in D \rightarrow W_x=D \rightarrow g(x)\notin \bar{M}$
+\end{itemize}
+Fuck yeah! Ce l'abbiamo fatta! Ora tocca dimostrare anche la produttività di $\bar{M}$.
+\begin{equation*}
+	\psi_A(x,y)=
+	\varphi_{g(x)}(y)=
+	\begin{cases}
+		1 \text{ se } x \in K \wedge y \in D\\
+		\uparrow \text{ altrimenti}
+	\end{cases}
+\end{equation*}
+\begin{itemize}
+	\item $x\in K \rightarrow \varphi_{g(x)}(y)\downarrow \iff y\in D \rightarrow W_x=D \rightarrow g(x)\in M$
+	\item $x\notin K \rightarrow \varphi_{g(x)}(y)\uparrow \rightarrow W_x=\varnothing \ne D \rightarrow g(x)\notin M$
 \end{itemize}
 
 \end{document}
