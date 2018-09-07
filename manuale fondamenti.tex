@@ -47,7 +47,7 @@ Mi rendo conto che la materia in questione sia piuttosto ostica, ma vi posso ass
 Ovviamente è \textbf{fondamentale} fare molti esercizi, in modo da verificare e consolidare l'apprendimento. Cercherò di essere il più chiaro possibile, ma non essendo mai stato bravo
 a spiegare potrebbero esserci dei punti non chiari, per i quali chiedo scusa in anticipo.
 
-Voglio ringraziare Jenny Bonato ed Elia Brentarolli per l'immensa pazienza che hanno avuto per insegnare a questo somaro le basi di questa materia.
+Voglio ringraziare Jenny Bonato ed Elia Brentarolli per l'immensa pazienza che hanno avuto per insegnare a questo somaro le basi di questa materia, e Andrea Caucchiolo per avermi corretto un po' di errori.
 
 Qualora dovreste trovare degli errori, scrivetemi a \href{mailto:matteoiervasi@gmail.com}{matteoiervasi@gmail.com}, oppure fate direttamente una ‘‘\textit{pull request}’’ nel repository GitHub.
 
@@ -269,7 +269,6 @@ Ricordiamoci che nell'applicare il pumping lemma dobbiamo sottostare a dei vinco
 	\item $\forall i \in \mathbb{N}.uv^iw\in L \text{ con }i\geq0$
 \end{itemize}
 Ovviamente non siamo stupidi, quindi scegliamo una stringa facile, in questo caso $z=0^n1^n$.
-L'unica suddivisione possibile è:
 \begin{center}
 	\begin{tikzpicture}
 	% String rectangle
@@ -303,7 +302,7 @@ Vediamo che per $i=0 \wedge i\geq2$ usciamo dal linguaggio, quindi possiamo dire
 Una possibile grammatica per questo linguaggio è:
 $$S \rightarrow S1S0S|S0S1S|\varepsilon$$
 \textbf{Fase 3: Dimostrazione della grammatica}\\
-\textbf{ATTENZIONE! WARNING! QUESTA PARTE E' INCOMPLETA!!!}\\
+{\LARGE ATTENZIONE! DIMOSTRAZIONE INCOMPLETA, NON HO VOGLIA DI FINIRLA PERCHÉ TROPPO LUNGA!}\\
 Per dimostrare la correttezza della nostra grammatica, dobbiamo dimostrare la seguente condizione:
 $$x\in L \Leftrightarrow S \Rightarrow_* x$$
 Essendo una doppia implicazione, dimostreremo separatamente
@@ -1464,6 +1463,7 @@ Mostriamo ora una famiglia di insiemi, le cui composizioni sono ricorsivamente e
     f_w=\{x|\varphi_{h(x)}(k(x))=l(x)\} \rightarrow RE
 \end{equation*}
 dove $h(x), k(x), l(x)$ sono funzioni totali ricorsive.\\
+
 
 \noindent
 Un'altra famiglia di insiemi è:
